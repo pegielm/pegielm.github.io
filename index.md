@@ -18,6 +18,8 @@ layout: default
 
 ![opgg](opgg.png)
 
+![warzone](img.png)
+
 ## good music for you :)
 
 [![good music for you :)](https://img.youtube.com/vi/44effZ1XexY/0.jpg)](https://www.youtube.com/watch?v=44effZ1XexY)
