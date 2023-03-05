@@ -8,7 +8,6 @@ layout: default
 
 ## my socials 
 
-[instagram](https://www.instagram.com/michal_q_1337)
 
 [leave like and subcribe here :)](https://www.youtube.com/channel/UCidjMEjFckRspfukjBnPdoA)
 
