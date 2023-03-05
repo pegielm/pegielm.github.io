@@ -1,9 +1,7 @@
----
-layout: default
----
 
-## Welcome to another page
 
-_yay_
+## more information about me on twitter
+
+[twitter](https://twitter.com/pegielm)
 
 [back](./)

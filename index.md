@@ -1,6 +1,4 @@
----
-layout: default
----
+
 
 [more details about me](./another-page.html).
 
@@ -8,8 +6,6 @@ layout: default
 
 ## my socials 
 
-<<<<<<< HEAD
-=======
 
 [leave like and subcribe here :)](https://www.youtube.com/channel/UCidjMEjFckRspfukjBnPdoA)
 
@@ -25,5 +21,6 @@ layout: default
 
 [![good music for you :)](https://img.youtube.com/vi/44effZ1XexY/0.jpg)](https://www.youtube.com/watch?v=44effZ1XexY)
 
-
+## cool cube
+[cube here](./cube.html)
 
