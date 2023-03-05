@@ -22,5 +22,5 @@
 [![good music for you :)](https://img.youtube.com/vi/44effZ1XexY/0.jpg)](https://www.youtube.com/watch?v=44effZ1XexY)
 
 ## cool cube
-[cube here](./cube.html)
+[cube here](cube_page.html)
 
