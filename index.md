@@ -8,7 +8,7 @@ layout: default
 
 ## my socials 
 
-[instagram](https://www.instagram.com/michal_q_1337)
+[twitter](https://twitter.com/pegielm)
 
 [leave like and subcribe here :)](https://www.youtube.com/channel/UCidjMEjFckRspfukjBnPdoA)
 
