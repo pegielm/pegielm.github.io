@@ -8,6 +8,8 @@ layout: default
 
 ## my socials 
 
+<<<<<<< HEAD
+=======
 
 [leave like and subcribe here :)](https://www.youtube.com/channel/UCidjMEjFckRspfukjBnPdoA)
 
