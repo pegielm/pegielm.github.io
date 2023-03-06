@@ -1,7 +1,7 @@
 
 
-## more information about me on twitter
+## soon
 
-[twitter](https://twitter.com/pegielm)
+soon
 
 [back](./)
