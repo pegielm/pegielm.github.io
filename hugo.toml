@@ -1,0 +1,48 @@
+baseURL = "https://pegielm.github.io/"
+languageCode = "en-us"
+title = "pegielm"
+theme = "archie"
+copyright = " © pegielm"
+pygmentsstyle = "monokai"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+paginate = 4
+
+[params]
+favicon = "https://img.icons8.com/?size=100&id=16133&format=png&color=000000"
+# mode = "auto"
+mode = "toggle"
+useCDN = true
+subtitle = "hi :) more posts soon"
+description = ":)"
+
+[[params.social]]
+name = "GitHub"
+icon = "github"
+url = "https://github.com/pegielm"
+
+[[params.social]]
+name = "Twitter"
+icon = "twitter"
+url = "https://x.com/pegielm/"
+
+
+[[menu.main]]
+name = "home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "all posts"
+url = "/posts"
+weight = 2
+
+[[menu.main]]
+name = "about me"
+url = "/about"
+weight = 3
+
+[[menu.main]]
+name = "tags"
+url = "/tags"
+weight = 4

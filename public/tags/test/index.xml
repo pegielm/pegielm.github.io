@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Test on pegielm</title>
+    <link>http://localhost:1313/tags/test/</link>
+    <description>Recent content in Test on pegielm</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright> © pegielm</copyright>
+    <lastBuildDate>Thu, 13 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/test/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>test post</title>
+      <link>http://localhost:1313/posts/post1/</link>
+      <pubDate>Thu, 13 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/post1/</guid>
+      <description>test test&#xA;def test: pass </description>
+    </item>
+  </channel>
+</rss>

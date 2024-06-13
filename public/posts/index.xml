@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on pegielm</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on pegielm</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright> © pegielm</copyright>
+    <lastBuildDate>Thu, 13 Jun 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>my interests</title>
+      <link>http://localhost:1313/posts/interests/</link>
+      <pubDate>Thu, 13 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/interests/</guid>
+      <description>Magic: the Gathering 🧙‍♂️ decks i used to play standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control modern: amulet titan, uw control, burn, humans pionieer: (currently playing): mono w humans , uw control , uw spirits, lotus field commander: brago, king eternal gym 🏋️‍♀️&#xA;other warzone win hearthstone </description>
+    </item>
+  </channel>
+</rss>
