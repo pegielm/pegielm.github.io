@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Rev on pegielm</title>
+    <link>http://localhost:1313/tags/rev/</link>
+    <description>Recent content in Rev on pegielm</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright> © pegielm</copyright>
+    <lastBuildDate>Tue, 07 May 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/rev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Magiczna cat writeup</title>
+      <link>http://localhost:1313/posts/magiczna_cat_writeup/</link>
+      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/magiczna_cat_writeup/</guid>
+      <description>Challenge description link to challange&#xA;&amp;lsquo;My cybersecurity job is very poorly paid and I&amp;rsquo;m looking for a more lucrative job in the gamedev industry. I hid a flag in one of my first games, try to find it!</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Magiczna cat writeup - pegielm</title><link rel="icon" type="image/png" href=https://img.icons8.com/?size&#61;100&amp;id&#61;16133&amp;format&#61;png&amp;color&#61;000000 /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="writeup of the magiczna cat challenge from hack cert 2024 ctf" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/magiczna_cat_writeup/">
+  <meta property="og:site_name" content="pegielm">
+  <meta property="og:title" content="Magiczna cat writeup">
+  <meta property="og:description" content="writeup of the magiczna cat challenge from hack cert 2024 ctf">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-05T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-07-05T00:00:00+00:00">
+    <meta property="article:tag" content="Ctf">
+    <meta property="article:tag" content="Rev">
+    <meta property="article:tag" content="Ecsc24">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Magiczna cat writeup">
+  <meta name="twitter:description" content="writeup of the magiczna cat challenge from hack cert 2024 ctf">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.d902908ac6e0fab67957de5db5aea1b6455b19ae2ca98eac4c95a4a0fdc02238.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css"  disabled />
+	
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">pegielm</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/about">about me</a>
+		
+		<a href="/tags">tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Magiczna cat writeup</h1>
+			<div class="meta">Posted on Jul 5, 2024</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="challenge-description">Challenge description</h1>
+<p><a href="https://hack.cert.pl/challenge/magiczna-cat">link to challange</a></p>
+<p>&ldquo;My cybersecurity job is very poorly paid and I&rsquo;m looking for a more lucrative job in the gamedev industry. I hid a flag in one of my first games, try to find it!&rdquo;</p>
+<h1 id="solution">Solution</h1>
+<p>Task is browser game written in JavaScript that looks like this:
+<img src="/images/board.png" alt="board"></p>
+<p>Our goal is to get to flag, but our route is blocked by a cat. After inspecting game.js in website sources we can find this part of code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>	,<span style="color:#a6e22e">onKeyDown</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">evt</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">keyCode</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">38</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">move</span>(<span style="color:#ae81ff">0</span>,<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">keyCode</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">40</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">move</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">keyCode</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">37</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">move</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">keyCode</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">39</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">move</span>(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">ok</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">false</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_g</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_g1</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Main_checks</span>;
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">while</span>(<span style="color:#a6e22e">_g</span> <span style="color:#f92672">&lt;</span> <span style="color:#a6e22e">_g1</span>.<span style="color:#a6e22e">length</span>) {
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">c</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">_g1</span>[<span style="color:#a6e22e">_g</span>];
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">++</span><span style="color:#a6e22e">_g</span>;
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">code</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">keyCode</span>;
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">h</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">haxe_crypto_Sha256</span>.<span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">Main_entry</span> <span style="color:#f92672">+</span> String.<span style="color:#a6e22e">fromCodePoint</span>(<span style="color:#a6e22e">code</span>));
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">h</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">c</span>) {
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">code1</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">evt</span>.<span style="color:#a6e22e">keyCode</span>;
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">Main_entry</span> <span style="color:#f92672">+=</span> String.<span style="color:#a6e22e">fromCodePoint</span>(<span style="color:#a6e22e">code1</span>);
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">ok</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span>(<span style="color:#f92672">!</span><span style="color:#a6e22e">ok</span>) {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">Main_entry</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>			} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(<span style="color:#a6e22e">Main_checks</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">Main_entry</span>.<span style="color:#a6e22e">length</span>) {
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chonker</span>.<span style="color:#a6e22e">dead</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">true</span>;
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chonker</span>.<span style="color:#a6e22e">text</span>.<span style="color:#a6e22e">set_text</span>(<span style="color:#e6db74">&#34;What did you just call me?&#34;</span>);
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">motion_Actuate</span>.<span style="color:#a6e22e">tween</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chonker</span>.<span style="color:#a6e22e">sprite</span>,<span style="color:#ae81ff">5</span>,{ <span style="color:#a6e22e">alpha</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>}).<span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">motion_Actuate</span>.<span style="color:#a6e22e">tween</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chonker</span>.<span style="color:#a6e22e">text</span>,<span style="color:#ae81ff">5</span>,{ <span style="color:#a6e22e">alpha</span> <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>}).<span style="color:#a6e22e">delay</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">chonker</span>.<span style="color:#a6e22e">interact</span>();
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">key</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">haxe_io_Bytes</span>.<span style="color:#a6e22e">ofString</span>(<span style="color:#a6e22e">Main_entry</span>);
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">haxe_io_Bytes</span>.<span style="color:#a6e22e">ofHex</span>(<span style="color:#a6e22e">Main_puma</span>);
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">totallyNotRc4</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">haxe_crypto_RC4</span>();
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">totallyNotRc4</span>.<span style="color:#a6e22e">init</span>(<span style="color:#a6e22e">key</span>);
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">totallyNotRc4</span>.<span style="color:#a6e22e">encrypt</span>(<span style="color:#a6e22e">msg</span>).<span style="color:#a6e22e">toString</span>();
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">text</span>.<span style="color:#a6e22e">set_text</span>(<span style="color:#a6e22e">data</span>);
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>and also:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Main_checks</span> <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;05d9b7c7ab57d1910d371165311b8690c89fd001a9e6f9278fe1ed8dd56f0788&#34;</span>,<span style="color:#e6db74">&#34;1778e423d6d629d89c2f839814378cebdb54d167bb8d43143e7e7052ba390546&#34;</span>,<span style="color:#e6db74">&#34;1f5998b5f01949b961b0189099f8af47a73da3cce4521fd7d932d3ae518106f1&#34;</span>,<span style="color:#e6db74">&#34;340575f433c680e201a894e51bc5c6cb16b2d09a26938ff0ac35a6aeed3dd66b&#34;</span>,<span style="color:#e6db74">&#34;4b9a236f5587b132745a993b2f8736a20ab3bf6aeb1c0dc4c24b794de3cc7e4a&#34;</span>,<span style="color:#e6db74">&#34;5880d0caa9c6f152151c5f5d935139f34a9f850a9f5c5e81976c3ced48ef5ba0&#34;</span>,<span style="color:#e6db74">&#34;5c7bb34803e9a28c2b3ff34373ae01d34a9116688e0153f006f59bdc4f21f0c1&#34;</span>,<span style="color:#e6db74">&#34;687d68de9d92a2a6d4765c2e372ae41fdd42534b285934b35606a1a69aeca453&#34;</span>,<span style="color:#e6db74">&#34;8de0b3c47f112c59745f717a626932264c422a7563954872e237b223af4ad643&#34;</span>,<span style="color:#e6db74">&#34;945f07d2c12bf634dfa8edab9a914732e276e975deb24139cca765bcee5b4d4c&#34;</span>,<span style="color:#e6db74">&#34;966fc9246a0db76e33308466ec84582061b123f1f4c6c1ff8851821472d17a05&#34;</span>,<span style="color:#e6db74">&#34;a79af54bb80ae8664c68ef9cd02fa4adb814d350eca3da517dd4590ea5b12912&#34;</span>,<span style="color:#e6db74">&#34;ac21b3d2df2fb1f258358747cc0ab3458bec3b6a96ffda13ee66929ea80f0a46&#34;</span>,<span style="color:#e6db74">&#34;bb5ebee9fa8db78b93f8f6bd15e8af72ea5678514e13ab62bb468d97b8e76b7e&#34;</span>,<span style="color:#e6db74">&#34;cb0fecfd6feaef33c38a7c82ce6f662ca13ea357caac699e45a436bf702db8c6&#34;</span>,<span style="color:#e6db74">&#34;d21e5e50b6510751e1a4631e158ddc4ab53b626a0342c636f2c58dd8536f851c&#34;</span>,<span style="color:#e6db74">&#34;e652823acb97d1510826d83092f6f059d237af6d28d04d89c0eab3c2397cea82&#34;</span>,<span style="color:#e6db74">&#34;e9e35bd4379f5ac0064353a2171e8ad4d7923570d4c57807b679a03e954b99cd&#34;</span>,<span style="color:#e6db74">&#34;f5aeb0b6798a7470cf56920ff59e499d0e5e8d0eda7049b533a97c5f31c93e8b&#34;</span>,<span style="color:#e6db74">&#34;f7e9e9e28ce567b8b6601d8284f2848e810376be8d00f536b0c438407c64a114&#34;</span>];
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Main_puma</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;4966e0190af57a5701e856c0858620d9815f9db3164a7265e6863289da22fe163c5a7253dd1119e36bd67b66f9f4e07b516df939d487db6fdff5&#34;</span>;
+</span></span></code></pre></div><p>So we can see that to get to the flag we need to press some keys in correct order. We can see that the keys pressed are hashed with keys pressed before them (this is checked by hashes in Main_checks array). After pressing all keys in correct order &ldquo;chonker&rdquo; dies (:c) and we get the flag (which is decrypted with RC4 where key is formed from keys pressed).</p>
+<p>We can write a script that bruteforces the correct order of keys:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> arc4 <span style="color:#f92672">import</span> ARC4
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#Main_check</span>
+</span></span><span style="display:flex;"><span>hashes <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;05d9b7c7ab57d1910d371165311b8690c89fd001a9e6f9278fe1ed8dd56f0788&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;1778e423d6d629d89c2f839814378cebdb54d167bb8d43143e7e7052ba390546&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;1f5998b5f01949b961b0189099f8af47a73da3cce4521fd7d932d3ae518106f1&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;340575f433c680e201a894e51bc5c6cb16b2d09a26938ff0ac35a6aeed3dd66b&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;4b9a236f5587b132745a993b2f8736a20ab3bf6aeb1c0dc4c24b794de3cc7e4a&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;5880d0caa9c6f152151c5f5d935139f34a9f850a9f5c5e81976c3ced48ef5ba0&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;5c7bb34803e9a28c2b3ff34373ae01d34a9116688e0153f006f59bdc4f21f0c1&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;687d68de9d92a2a6d4765c2e372ae41fdd42534b285934b35606a1a69aeca453&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;8de0b3c47f112c59745f717a626932264c422a7563954872e237b223af4ad643&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;945f07d2c12bf634dfa8edab9a914732e276e975deb24139cca765bcee5b4d4c&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;966fc9246a0db76e33308466ec84582061b123f1f4c6c1ff8851821472d17a05&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;a79af54bb80ae8664c68ef9cd02fa4adb814d350eca3da517dd4590ea5b12912&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;ac21b3d2df2fb1f258358747cc0ab3458bec3b6a96ffda13ee66929ea80f0a46&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;bb5ebee9fa8db78b93f8f6bd15e8af72ea5678514e13ab62bb468d97b8e76b7e&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;cb0fecfd6feaef33c38a7c82ce6f662ca13ea357caac699e45a436bf702db8c6&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;d21e5e50b6510751e1a4631e158ddc4ab53b626a0342c636f2c58dd8536f851c&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;e652823acb97d1510826d83092f6f059d237af6d28d04d89c0eab3c2397cea82&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;e9e35bd4379f5ac0064353a2171e8ad4d7923570d4c57807b679a03e954b99cd&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;f5aeb0b6798a7470cf56920ff59e499d0e5e8d0eda7049b533a97c5f31c93e8b&#34;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#34;f7e9e9e28ce567b8b6601d8284f2848e810376be8d00f536b0c438407c64a114&#34;</span>]
+</span></span><span style="display:flex;"><span>alphabet <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&amp;*()_+</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">|:&lt;&gt;?&#34;</span>
+</span></span><span style="display:flex;"><span>password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>found <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> alphabet:
+</span></span><span style="display:flex;"><span>        tmp <span style="color:#f92672">=</span> password <span style="color:#f92672">+</span> j
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> hash <span style="color:#f92672">in</span> hashes:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> hashlib<span style="color:#f92672">.</span>sha256(tmp<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>hexdigest() <span style="color:#f92672">==</span> hash:
+</span></span><span style="display:flex;"><span>                password <span style="color:#f92672">+=</span> j
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> len(password) <span style="color:#f92672">==</span> len(hashes):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;password :&#34;</span>,password)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Main_puma</span>
+</span></span><span style="display:flex;"><span>encrypted <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;4966e0190af57a5701e856c0858620d9815f9db3164a7265e6863289da22fe163c5a7253dd1119e36bd67b66f9f4e07b516df939d487db6fdff5&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>arc4 <span style="color:#f92672">=</span> ARC4(password<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>encrypted <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>fromhex(encrypted)
+</span></span><span style="display:flex;"><span>decrypted <span style="color:#f92672">=</span> arc4<span style="color:#f92672">.</span>decrypt(encrypted)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;flag :&#34;</span>,decrypted<span style="color:#f92672">.</span>decode())
+</span></span></code></pre></div><p>and we get output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>password : SPEAKCHONKERANDENTER
+</span></span><span style="display:flex;"><span>flag : ecsc24<span style="color:#f92672">{</span>A_cat_from_my_past_btw_the_language_is_called_haxe<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>Also if we just type &ldquo;SPEAKCHONKERANDENTER&rdquo; in the game we get the flag:</p>
+<p><img src="/images/solved.png" alt="flag"></p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/ctf">ctf</a></li>
+					
+					<li><a href="/tags/rev">rev</a></li>
+					
+					<li><a href="/tags/ecsc24">ecsc24</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/pegielm" rel="me" title="GitHub"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://x.com/pegielm/" rel="me" title="Twitter"><i data-feather="twitter"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2024   © pegielm |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>

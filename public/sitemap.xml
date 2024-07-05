@@ -20,6 +20,15 @@
     <loc>http://localhost:1313/tags/</loc>
     <lastmod>2024-06-13T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>http://localhost:1313/tags/ctf/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/posts/magiczna_cat_writeup/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/rev/</loc>
+    <lastmod>2024-05-07T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url>
 </urlset>
