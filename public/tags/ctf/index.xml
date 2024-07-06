@@ -7,14 +7,21 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Tue, 07 May 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Magiczna cat writeup</title>
+      <title>cpu goes brrr writeup</title>
+      <link>http://localhost:1313/posts/cpu_goes_brrr_writeup/</link>
+      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/cpu_goes_brrr_writeup/</guid>
+      <description>Challenge description link to challange&#xA;&amp;ldquo;It might print the flag. If you wait long enough&amp;hellip; https://www.youtube.com/watch?v=h3hwff_CeeM.&amp;quot;&#xA;Solution </description>
+    </item>
+    <item>
+      <title>magiczna cat writeup</title>
       <link>http://localhost:1313/posts/magiczna_cat_writeup/</link>
-      <pubDate>Tue, 07 May 2024 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/magiczna_cat_writeup/</guid>
-      <description>Challenge description link to challange&#xA;&amp;lsquo;My cybersecurity job is very poorly paid and I&amp;rsquo;m looking for a more lucrative job in the gamedev industry. I hid a flag in one of my first games, try to find it!</description>
+      <description>Challenge description link to challange&#xA;&amp;ldquo;My cybersecurity job is very poorly paid and I&amp;rsquo;m looking for a more lucrative job in the gamedev industry. I hid a flag in one of my first games, try to find it!&amp;rdquo;&#xA;Solution Task is browser game written in JavaScript that looks like this: Our goal is to get to flag, but our route is blocked by a cat. After inspecting game.js in website sources we can find this part of code:</description>
     </item>
   </channel>
 </rss>

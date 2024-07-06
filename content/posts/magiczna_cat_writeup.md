@@ -1,5 +1,5 @@
 ---
-title: Magiczna cat writeup
+title: magiczna cat writeup
 date: 2024-07-05
 description: "writeup of the magiczna cat challenge from hack cert 2024 ctf"
 tags: ["ctf","rev","ecsc24"]
@@ -126,6 +126,8 @@ and we get output:
 password : SPEAKCHONKERANDENTER
 flag : ecsc24{A_cat_from_my_past_btw_the_language_is_called_haxe}
 ```
+
+🐈 -> 💀
 
 Also if we just type "SPEAKCHONKERANDENTER" in the game we get the flag:
 
