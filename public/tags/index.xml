@@ -24,6 +24,20 @@
       <description></description>
     </item>
     <item>
+      <title>Hackthevote</title>
+      <link>http://localhost:1313/tags/hackthevote/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/hackthevote/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Pwn</title>
+      <link>http://localhost:1313/tags/pwn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/tags/pwn/</guid>
+      <description></description>
+    </item>
+    <item>
       <title>Rev</title>
       <link>http://localhost:1313/tags/rev/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

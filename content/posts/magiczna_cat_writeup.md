@@ -14,7 +14,7 @@ tags: ["ctf","rev","ecsc24"]
 # Solution
 
 Task is browser game written in JavaScript that looks like this:
-![board](/images/board.png)
+![board](/images/magiczna_cat/board.png)
 
 Our goal is to get to flag, but our route is blocked by a cat. After inspecting game.js in website sources we can find this part of code:
 ```javascript
@@ -131,5 +131,5 @@ flag : ecsc24{A_cat_from_my_past_btw_the_language_is_called_haxe}
 
 Also if we just type "SPEAKCHONKERANDENTER" in the game we get the flag:
 
-![flag](/images/solved.png)
+![flag](/images/magiczna_cat/solved.png)
 

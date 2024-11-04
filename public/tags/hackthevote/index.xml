@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hackthevote on pegielm</title>
+    <link>http://localhost:1313/tags/hackthevote/</link>
+    <description>Recent content in Hackthevote on pegielm</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright> © pegielm</copyright>
+    <lastBuildDate>Fri, 05 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/hackthevote/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>comma club writeup</title>
+      <link>http://localhost:1313/posts/comma_club_writeup/</link>
+      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/comma_club_writeup/</guid>
+      <description>Challenge description link to challange&#xA;&amp;ldquo;We need somone to run our vote tallying machine, and it needs to be someone trustworthy. Apparently there&amp;rsquo;s some problem if a candidate gets too many votes. Shouldn&amp;rsquo;t be a problem for us in Wyoming though.&amp;rdquo;&#xA;nc comma-club.chal.hackthe.vote 1337&#xA;file&#xA;Solution After inspecting the checksec output, we can see that the binary is not stripped and has all the protections disabled. We can also see that the binary is a 64-bit ELF file.</description>
+    </item>
+  </channel>
+</rss>

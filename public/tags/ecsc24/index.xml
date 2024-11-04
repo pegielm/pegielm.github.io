@@ -14,7 +14,7 @@
       <link>http://localhost:1313/posts/cpu_goes_brrr_writeup/</link>
       <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/cpu_goes_brrr_writeup/</guid>
-      <description>Challenge description link to challange&#xA;&amp;ldquo;It might print the flag. If you wait long enough&amp;hellip; https://www.youtube.com/watch?v=h3hwff_CeeM.&amp;quot;&#xA;Solution </description>
+      <description>Challenge description link to challange&#xA;&amp;ldquo;It might print the flag. If you wait long enough&amp;hellip; https://www.youtube.com/watch?v=h3hwff_CeeM.&amp;quot;&#xA;Solution The challenge is binary file, we can decompile it using Ida (or other disassembler).&#xA;These are most important parts of the code:&#xA;main function:&#xA;__int64 __fastcall main(int a1, char **a2, char **a3) { void *v3; // rsp char v4; // r12 int i; // [rsp+8h] [rbp-30h] BYREF int v7; // [rsp+Ch] [rbp-2Ch] __int64 v8; // [rsp+10h] [rbp-28h] void *s; // [rsp+18h] [rbp-20h] unsigned __int64 v10; // [rsp+20h] [rbp-18h] v10 = __readfsqword(0x28u); v7 = 37; v8 = 37LL; v3 = alloca(48LL); s = &amp;amp;i; memset(&amp;amp;i, 0, 38uLL); for ( i = 0; i &amp;lt; v7; ++i ) { v4 = byte_4020[i]; *((_BYTE *)s + i) = sub_126B(i * i * i) ^ v4; puts((const char *)s); } return 0LL; } key generation function:</description>
     </item>
     <item>
       <title>magiczna cat writeup</title>

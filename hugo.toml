@@ -13,8 +13,8 @@ favicon = "https://img.icons8.com/?size=100&id=16133&format=png&color=000000"
 # mode = "auto"
 mode = "toggle"
 useCDN = true
-subtitle = "hi :) more posts soon"
-description = ":)"
+subtitle = "hi :3"
+description = ":3"
 
 [[params.social]]
 name = "GitHub"

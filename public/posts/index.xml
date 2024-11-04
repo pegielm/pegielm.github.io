@@ -10,11 +10,18 @@
     <lastBuildDate>Fri, 05 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>comma club writeup</title>
+      <link>http://localhost:1313/posts/comma_club_writeup/</link>
+      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/comma_club_writeup/</guid>
+      <description>Challenge description link to challange&#xA;&amp;ldquo;We need somone to run our vote tallying machine, and it needs to be someone trustworthy. Apparently there&amp;rsquo;s some problem if a candidate gets too many votes. Shouldn&amp;rsquo;t be a problem for us in Wyoming though.&amp;rdquo;&#xA;nc comma-club.chal.hackthe.vote 1337&#xA;file&#xA;Solution After inspecting the checksec output, we can see that the binary is not stripped and has all the protections disabled. We can also see that the binary is a 64-bit ELF file.</description>
+    </item>
+    <item>
       <title>cpu goes brrr writeup</title>
       <link>http://localhost:1313/posts/cpu_goes_brrr_writeup/</link>
       <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/cpu_goes_brrr_writeup/</guid>
-      <description>Challenge description link to challange&#xA;&amp;ldquo;It might print the flag. If you wait long enough&amp;hellip; https://www.youtube.com/watch?v=h3hwff_CeeM.&amp;quot;&#xA;Solution </description>
+      <description>Challenge description link to challange&#xA;&amp;ldquo;It might print the flag. If you wait long enough&amp;hellip; https://www.youtube.com/watch?v=h3hwff_CeeM.&amp;quot;&#xA;Solution The challenge is binary file, we can decompile it using Ida (or other disassembler).&#xA;These are most important parts of the code:&#xA;main function:&#xA;__int64 __fastcall main(int a1, char **a2, char **a3) { void *v3; // rsp char v4; // r12 int i; // [rsp+8h] [rbp-30h] BYREF int v7; // [rsp+Ch] [rbp-2Ch] __int64 v8; // [rsp+10h] [rbp-28h] void *s; // [rsp+18h] [rbp-20h] unsigned __int64 v10; // [rsp+20h] [rbp-18h] v10 = __readfsqword(0x28u); v7 = 37; v8 = 37LL; v3 = alloca(48LL); s = &amp;amp;i; memset(&amp;amp;i, 0, 38uLL); for ( i = 0; i &amp;lt; v7; ++i ) { v4 = byte_4020[i]; *((_BYTE *)s + i) = sub_126B(i * i * i) ^ v4; puts((const char *)s); } return 0LL; } key generation function:</description>
     </item>
     <item>
       <title>magiczna cat writeup</title>
@@ -28,7 +35,7 @@
       <link>http://localhost:1313/posts/interests/</link>
       <pubDate>Thu, 13 Jun 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/interests/</guid>
-      <description>Magic: the Gathering 🧙‍♂️ decks i used to play standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control modern: amulet titan, uw control, burn, humans pionieer: (currently playing): mono w humans , uw control , uw spirits, lotus field commander: brago, king eternal gym 🏋️‍♀️&#xA;other warzone win hearthstone </description>
+      <description>Magic: the Gathering 🧙‍♂️ decks i used to play standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control modern: amulet titan, uw control, burn, humans pionieer: mono w humans , uw control , uw spirits, lotus field commander: brago, king eternal gym 🏋️‍♀️&#xA;other hearthstone also CS and LoL</description>
     </item>
   </channel>
 </rss>

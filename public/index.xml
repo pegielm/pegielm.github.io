@@ -10,6 +10,13 @@
     <lastBuildDate>Fri, 05 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>comma club writeup</title>
+      <link>http://localhost:1313/posts/comma_club_writeup/</link>
+      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/comma_club_writeup/</guid>
+      <description>Challenge description link to challange&#xA;&amp;ldquo;We need somone to run our vote tallying machine, and it needs to be someone trustworthy. Apparently there&amp;rsquo;s some problem if a candidate gets too many votes. Shouldn&amp;rsquo;t be a problem for us in Wyoming though.&amp;rdquo;&#xA;nc comma-club.chal.hackthe.vote 1337&#xA;file&#xA;Solution After inspecting the checksec output, we can see that the binary is not stripped and has all the protections disabled. We can also see that the binary is a 64-bit ELF file.</description>
+    </item>
+    <item>
       <title>cpu goes brrr writeup</title>
       <link>http://localhost:1313/posts/cpu_goes_brrr_writeup/</link>
       <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
@@ -28,14 +35,14 @@
       <link>http://localhost:1313/about/</link>
       <pubDate>Thu, 13 Jun 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/about/</guid>
-      <description>im cybersecuirty student&#xA;my repos are here more about me in interests</description>
+      <description>cybersecuirty student&#xA;ctf: rev/pwn/crypto&#xA;my repos are here more about me in interests</description>
     </item>
     <item>
       <title>my interests</title>
       <link>http://localhost:1313/posts/interests/</link>
       <pubDate>Thu, 13 Jun 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/interests/</guid>
-      <description>Magic: the Gathering 🧙‍♂️ decks i used to play standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control modern: amulet titan, uw control, burn, humans pionieer: (currently playing): mono w humans , uw control , uw spirits, lotus field commander: brago, king eternal gym 🏋️‍♀️&#xA;other warzone win hearthstone </description>
+      <description>Magic: the Gathering 🧙‍♂️ decks i used to play standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control modern: amulet titan, uw control, burn, humans pionieer: mono w humans , uw control , uw spirits, lotus field commander: brago, king eternal gym 🏋️‍♀️&#xA;other hearthstone also CS and LoL</description>
     </item>
   </channel>
 </rss>
