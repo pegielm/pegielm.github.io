@@ -7,12 +7,19 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Fri, 05 Jul 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 11 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/ctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ISA 101</title>
+      <link>http://localhost:1313/posts/isa_101_writeup/</link>
+      <pubDate>Mon, 11 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/isa_101_writeup/</guid>
+      <description>Challenge description Goal of the challange is to reverse engineer code written in ISA documentation (Assembly language designed by Black Bauhinia).&#xA;With challange we get 2 urls:&#xA;Challenge: https://c58a-ish-1.hkcert24.pwnable.hk?id=3&#xA;Playground: https://c58b-ish-2.hkcert24.pwnable.hk?id=1&#xA;We can access the executable and download assembly in the challenge url, and the playground url is a web interface to run and debug the ISA code.&#xA;Solution Assembly code (with added comments):&#xA;JMP 0x400088; PUSH FP; MOV FP, SP; SUB SP, 4; MOV R1, [FP+8]; MOV R8, 5; SYSCALL; MOV R2, R1; MOV R1, 0; MOV SP, FP; POP FP; RET; SUB SP, 364; MOV R1, SP; MOV SP, FP; SUB SP, 0; PUSH 0xb146f66e; //xor keys pushed on stack PUSH 0x2fd8b7c1; PUSH 0x95e11585; PUSH 0xcf39fb28; PUSH 0xb3accf4c; PUSH 0xdb22a8cb; PUSH 0xe21f60cd; PUSH 0xb660d0fe; PUSH 0x8be89ec9; PUSH 0x241bd185; PUSH 0x161d7e99; PUSH 0xbf3a7f64; PUSH 0xea7454ee; PUSH 0x2e04ce47; PUSH 0x18b25e16; PUSH 0x2295643e; PUSH 0x49f8d91f; PUSH 0x3f541ea6; PUSH 0x113d8a6f; PUSH 0x38726ccc; PUSH 0x2e27be68; PUSH 0xd4e398ea; PUSH 0x7fcba040; PUSH 0xeec775f5; PUSH 0x478ff266; PUSH 0x718a3507; PUSH 0x536edeba; PUSH 0xf0efb119; PUSH 0x9efdd1c2; PUSH 0x977b4203; PUSH 0x2ceeda0d; PUSH 0xfdc086ff; PUSH 0x2303c15a; PUSH 0x3c9d30a1; PUSH 0x193f231b; PUSH 0x1a06a63f; PUSH 0x5c829f5; PUSH 0x49c872b8; PUSH 0x92bcbdad; PUSH 0xa9a5a84e; PUSH 0xb16969c; PUSH 0xb58b3659; PUSH 0x642069c9; PUSH 0x9c37ba69; PUSH 0x623277a4; PUSH 0x17b6f65c; PUSH 0xa6a21506; PUSH 0x15881c76; PUSH 0x96ed9c50; PUSH 0x21226b56; PUSH 0xd8890218; PUSH 0xca6eddde; PUSH 0x9a18e395; PUSH 0x936f6277; PUSH 0xaf23d230; PUSH 0x88d9666a; PUSH 0xff591d2f; PUSH 0xce454872; PUSH 0xf3391e9f; PUSH 0x4ddd147f; PUSH 0x404bcc99; PUSH 0x5becacfd; PUSH 0x1d9f2f1; PUSH 0xc833a241; MOV SP, R1; MOV R1, FP; SUB R1, 356; MOV R2, 100; MOV R8, 0; SYSCALL; //read input MOV R2, R8; MOV R3, 0; MOV R4, FP; SUB R4, 256; MOV R5, R4; ADD R5, R3; MOV R6, R1; ADD R6, R3; MOV R7, [R5]; XOR [R6], R7; //xor input with key MOV [FP-360], R2; MOV [FP-364], R3; MOV R1, FP; SUB R1, 356; MOV R2, [FP-360]; MOV R3, [FP-364]; ADD R3, 4; LT R3, 100; JNZ -231; //loop MOV R4, R1; ADD R4, R2; MOV [R4], 0; MOV R4, R1; ADD R4, 0; EQ [R4], 29548; //check if decrypted value begins wth 29548 JNZ +9; JMP +20; MOV R8, 4; SYSCALL; MOV R4, R1; ADD R4, 0; EQ [R4], 1667594341; //check if decrypted value begins wth 1667594341 JNZ +9; JMP +94; MOV R4, R1; ADD R4, 5; PUSH R4; MOV [FP-360], R2; MOV [FP-364], R3; CALL 0x400014; ADD SP, 4; MOV R1, 0; MOV R8, 2; SYSCALL; ADD SP, 364; After inspecting the code (adding breakpoints on XOR, and on value checks), we can see that it takes some input from the user (on image 4141&amp;hellip; = &amp;lsquo;AAAAA.</description>
+    </item>
     <item>
       <title>comma club writeup</title>
       <link>http://localhost:1313/posts/comma_club_writeup/</link>
-      <pubDate>Fri, 05 Jul 2024 00:00:00 +0000</pubDate>
+      <pubDate>Wed, 06 Nov 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/comma_club_writeup/</guid>
       <description>Challenge description link to challange&#xA;&amp;ldquo;We need somone to run our vote tallying machine, and it needs to be someone trustworthy. Apparently there&amp;rsquo;s some problem if a candidate gets too many votes. Shouldn&amp;rsquo;t be a problem for us in Wyoming though.&amp;rdquo;&#xA;nc comma-club.chal.hackthe.vote 1337&#xA;file&#xA;Solution After inspecting the checksec output, we can see that the binary is not stripped and has all the protections disabled. We can also see that the binary is a 64-bit ELF file.</description>
     </item>

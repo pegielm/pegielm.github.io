@@ -10,10 +10,10 @@ paginate = 4
 
 [params]
 favicon = "https://img.icons8.com/?size=100&id=16133&format=png&color=000000"
-# mode = "auto"
+#mode = "auto"
 mode = "toggle"
 useCDN = true
-subtitle = "hi :3"
+subtitle = "hi :3 writeups below ⬇️"
 description = ":3"
 
 [[params.social]]

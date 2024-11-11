@@ -1,6 +1,6 @@
 ---
 title: comma club writeup
-date: 2024-07-05
+date: 2024-11-06
 description: "writeup of the comma-club and comma-club-revenge challenges from hack the vote ctf"
 tags: ["ctf","pwn","hackthevote"]
 ---
