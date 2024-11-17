@@ -7,10 +7,17 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Mon, 11 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 17 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>ISA 101</title>
+      <title>red flags writeup</title>
+      <link>http://localhost:1313/posts/red_flags_writeup/</link>
+      <pubDate>Sun, 17 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/red_flags_writeup/</guid>
+      <description>Challenge description link to challange : red flags (34 solves)&#xA;The challenge is simple game made in godot engine with a goal to touch flags in correct order - when you touch each flag letters move in some directions.&#xA;We can see bait flag here ;)&#xA;Solution I started by extracting the game files (project) with Godot RE Tools and then opened it in godot engine.&#xA;Then we can see game source code, also we can debug and change it.</description>
+    </item>
+    <item>
+      <title>ISA 101 writeup</title>
       <link>http://localhost:1313/posts/isa_101_writeup/</link>
       <pubDate>Mon, 11 Nov 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/isa_101_writeup/</guid>
