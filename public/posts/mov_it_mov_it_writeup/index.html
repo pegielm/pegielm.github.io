@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>mov it mov it writeup - pegielm</title><link rel="icon" type="image/png" href=https://img.icons8.com/?size&#61;100&amp;id&#61;16133&amp;format&#61;png&amp;color&#61;000000 /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="writeup of the mov it mov it challenge from zeroday ctf (which I created)" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/mov_it_mov_it_writeup/">
+  <meta property="og:site_name" content="pegielm">
+  <meta property="og:title" content="mov it mov it writeup">
+  <meta property="og:description" content="writeup of the mov it mov it challenge from zeroday ctf (which I created)">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-12-03T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-12-03T00:00:00+00:00">
+    <meta property="article:tag" content="Ctf">
+    <meta property="article:tag" content="Rev">
+    <meta property="article:tag" content="Zeroday">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="mov it mov it writeup">
+  <meta name="twitter:description" content="writeup of the mov it mov it challenge from zeroday ctf (which I created)">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.d902908ac6e0fab67957de5db5aea1b6455b19ae2ca98eac4c95a4a0fdc02238.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css"  disabled />
+	
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">pegielm</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/about">about me</a>
+		
+		<a href="/tags">tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">mov it mov it writeup</h1>
+			<div class="meta">Posted on Dec 3, 2024</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="challenge-description">Challenge description</h1>
+<p>Oh no! The poor mage has stumbled upon a massive stone blocking his path. If only there was someone who knew a spell to <a href="https://www.youtube.com/watch?v=jLPYnw17GTY">mov it</a>&hellip;</p>
+<p>files :</p>
+<p><a href="/files/mov_it_mov_it/chall">chall</a></p>
+<p>or you can build it from source:</p>
+<p><a href="/files/mov_it_mov_it/source.c">source.c</a></p>
+<p>but you need to compile it with <a href="https://github.com/xoreaxeaxeax/movfuscator">movuscator</a> :)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>movcc  -Wf--no-mov-flow source.c -o chall
+</span></span></code></pre></div><h1 id="solution">Solution</h1>
+<ol>
+<li>
+<p>run chall in gdb</p>
+</li>
+<li>
+<p>set breakpoint on puts (b *puts) (other breakpoints probably also work, puts is visible in the debugger)</p>
+</li>
+<li>
+<p>stack:</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>───────────────────────────────────────────────────────[ STACK ]────────────────────────────────────────────────────────
+</span></span><span style="display:flex;"><span>00:0000│ eax esp 0x85f626c (stack+2096572) —▸ 0x804b9d0 (main+9972) ◂— mov dword ptr [0x804d370], eax
+</span></span><span style="display:flex;"><span>01:0004│         0x85f6270 (stack+2096576) —▸ 0x804d1e0 ◂— imul esp, dword ptr [eax], 0x746e6163 /* 0x61632069; &#34;i cant&#39;t move it move it :(\n&#34; */
+</span></span><span style="display:flex;"><span>02:0008│         0x85f6274 (stack+2096580) ◂— 0x7d /* &#39;}&#39; */
+</span></span><span style="display:flex;"><span>03:000c│         0x85f6278 (stack+2096584) ◂— 1
+</span></span><span style="display:flex;"><span>04:0010│         0x85f627c (stack+2096588) ◂— 0x61 /* &#39;a&#39; */
+</span></span><span style="display:flex;"><span>05:0014│         0x85f6280 (stack+2096592) ◂— 0
+</span></span></code></pre></div><p>last char of flag is at 0x85f6274</p>
+<ol start="4">
+<li>
+<p>rwatch *(int *) 0x85f6274</p>
+</li>
+<li>
+<p>read values from watchpoint and convert to char</p>
+</li>
+<li>
+<p>profit</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>zeroday{l00king_4t_m0ving_ch4rs_m4k3s_r0cks_flight_4way}
+</span></span></code></pre></div><ol start="7">
+<li>solve script:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#use:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#gdb -x solve.py</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#input anything</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pwndbg
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> pwndbg.commands
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> gdb
+</span></span><span style="display:flex;"><span>file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./chall&#39;</span>
+</span></span><span style="display:flex;"><span>address <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x85f6274</span>
+</span></span><span style="display:flex;"><span>values <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># function to print flag chars</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">print_value</span>(event):
+</span></span><span style="display:flex;"><span>    value <span style="color:#f92672">=</span> gdb<span style="color:#f92672">.</span>parse_and_eval(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;*(int *) </span><span style="color:#e6db74">{</span>address<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Value at address </span><span style="color:#e6db74">{</span>hex(address)<span style="color:#e6db74">}</span><span style="color:#e6db74"> changed to: </span><span style="color:#e6db74">{</span>value<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>    values<span style="color:#f92672">.</span>append(chr(value))
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(values))
+</span></span><span style="display:flex;"><span>    gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;c&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># add watchpoint</span>
+</span></span><span style="display:flex;"><span>gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;rwatch *(int *) </span><span style="color:#e6db74">{</span>address<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># add function to event</span>
+</span></span><span style="display:flex;"><span>gdb<span style="color:#f92672">.</span>events<span style="color:#f92672">.</span>stop<span style="color:#f92672">.</span>connect(print_value)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gdb commands</span>
+</span></span><span style="display:flex;"><span>gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;file ./</span><span style="color:#e6db74">{</span>file<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#39;run&#39;</span>)
+</span></span><span style="display:flex;"><span>gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#39;c&#39;</span>)
+</span></span><span style="display:flex;"><span>gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#39;c&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>┳┳┓┏┓┓┏  ┳┏┳┓  ┳┳┓┏┓┓┏  ┳┏┳┓  ╻
+</span></span><span style="display:flex;"><span>┃┃┃┃┃┃┃  ┃ ┃   ┃┃┃┃┃┃┃  ┃ ┃   ┃
+</span></span><span style="display:flex;"><span>┛ ┗┗┛┗┛  ┻ ┻   ┛ ┗┗┛┗┛  ┻ ┻   •
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>OH NO ! there is a boulder on the road !
+</span></span><span style="display:flex;"><span>i need a spell that will help me to move it:
+</span></span><span style="display:flex;"><span>zeroday{l00king_4t_m0ving_ch4rs_m4k3s_r0cks_flight_4way}
+</span></span><span style="display:flex;"><span>thank you for helping me!
+</span></span><span style="display:flex;"><span>now i can continue my journey :)
+</span></span></code></pre></div>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/ctf">ctf</a></li>
+					
+					<li><a href="/tags/rev">rev</a></li>
+					
+					<li><a href="/tags/zeroday">zeroday</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/pegielm" rel="me" title="GitHub"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://x.com/pegielm/" rel="me" title="Twitter"><i data-feather="twitter"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2024   © pegielm |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>

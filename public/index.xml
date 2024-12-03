@@ -7,8 +7,29 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Sun, 17 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 03 Dec 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>fifology writeup</title>
+      <link>http://localhost:1313/posts/fifology_writeup/</link>
+      <pubDate>Tue, 03 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/fifology_writeup/</guid>
+      <description>Challenge description In the age of old, before the Stack-mages seized dominion over enchanted devices, only a select few possessed the wisdom to unravel the mysteries of the arcane queue language.&#xA;files :&#xA;program.fo&#xA;documentation.md&#xA;Solution we can seperate the code into parts:&#xA;PUSH 0; PUSH 6; PUSH 102; PUSH 108; PUSH 97; PUSH 103; PUSH 58; PUSH 32; SYSCALL; prints flag: PUSH 244; PUSH 100; PUSH 224; PUSH 108; PUSH 192; PUSH 92; PUSH 230; PUSH 116; PUSH 202; PUSH 43; PUSH 210; PUSH 105; PUSH 178; PUSH 101; PUSH 162; PUSH 13; PUSH 37; PUSH 78; PUSH 182; PUSH 78; PUSH 166; PUSH 84; PUSH 154; PUSH 72; PUSH 168; PUSH 72; PUSH 168; PUSH 76; PUSH 178; PUSH 68; PUSH 146; PUSH 70; PUSH 166; PUSH 92; PUSH 0; PUSH 34; this part of the code is a flag chars before decryption.</description>
+    </item>
+    <item>
+      <title>in the dark writeup</title>
+      <link>http://localhost:1313/posts/in_the_dark_writeup/</link>
+      <pubDate>Tue, 03 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/in_the_dark_writeup/</guid>
+      <description>Challenge description A lone mage, lost in the abyss of darkness awaits aid. Only a experienced wizard can guide him, perceiving what mortal eyes cannot see&amp;hellip;&#xA;files :&#xA;chall&#xA;or you can build it from source:&#xA;source.c&#xA;you need to compile it with:&#xA;gcc source.c -lssl -lcrypto -o chall Solution open chall in ida&#xA;in move_right() function (or any other) there is variable &amp;lsquo;MAP&amp;rsquo;&#xA;after inspecting the &amp;lsquo;MAP&amp;rsquo; (right click -&amp;gt; array -&amp;gt; turn off &amp;lsquo;Use dup construnct&amp;rsquo;) we can see (or in gdb &amp;lsquo;x/100x (int*)&amp;amp;MAP&amp;rsquo;):</description>
+    </item>
+    <item>
+      <title>mov it mov it writeup</title>
+      <link>http://localhost:1313/posts/mov_it_mov_it_writeup/</link>
+      <pubDate>Tue, 03 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mov_it_mov_it_writeup/</guid>
+      <description>Challenge description Oh no! The poor mage has stumbled upon a massive stone blocking his path. If only there was someone who knew a spell to mov it&amp;hellip;&#xA;files :&#xA;chall&#xA;or you can build it from source:&#xA;source.c&#xA;but you need to compile it with movuscator :)&#xA;movcc -Wf--no-mov-flow source.c -o chall Solution run chall in gdb&#xA;set breakpoint on puts (b *puts) (other breakpoints probably also work, puts is visible in the debugger)</description>
+    </item>
     <item>
       <title>red flags writeup</title>
       <link>http://localhost:1313/posts/red_flags_writeup/</link>

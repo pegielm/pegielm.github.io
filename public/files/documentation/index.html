@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title> - pegielm</title><link rel="icon" type="image/png" href=https://img.icons8.com/?size&#61;100&amp;id&#61;16133&amp;format&#61;png&amp;color&#61;000000 /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="FIFO-ASM FIFO-ASM is a simple assembly language that operates on a FIFO queue. It is designed to be simple and easy to understand while providing a basic set of instructions to perform arithmetic operations, data movement, and control flow, as well as system calls.
+Now you can push a string letter by letter onto queue, pop them one by one and get the string in correct order!
+Registers and queue A, B, C: Three general-purpose registers that can store integer values." />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/files/documentation/">
+  <meta property="og:site_name" content="pegielm">
+  <meta property="og:title" content="pegielm">
+  <meta property="og:description" content="FIFO-ASM FIFO-ASM is a simple assembly language that operates on a FIFO queue. It is designed to be simple and easy to understand while providing a basic set of instructions to perform arithmetic operations, data movement, and control flow, as well as system calls.
+Now you can push a string letter by letter onto queue, pop them one by one and get the string in correct order!
+Registers and queue A, B, C: Three general-purpose registers that can store integer values.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="files">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="pegielm">
+  <meta name="twitter:description" content="FIFO-ASM FIFO-ASM is a simple assembly language that operates on a FIFO queue. It is designed to be simple and easy to understand while providing a basic set of instructions to perform arithmetic operations, data movement, and control flow, as well as system calls.
+Now you can push a string letter by letter onto queue, pop them one by one and get the string in correct order!
+Registers and queue A, B, C: Three general-purpose registers that can store integer values.">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.d902908ac6e0fab67957de5db5aea1b6455b19ae2ca98eac4c95a4a0fdc02238.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css"  disabled />
+	
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">pegielm</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/about">about me</a>
+		
+		<a href="/tags">tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title"></h1>
+			<div class="meta">Posted on Jan 1, 0001</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="fifo-asm">FIFO-ASM</h1>
+<p>FIFO-ASM is a simple assembly language that operates on a FIFO queue. It is designed to be simple and easy to understand while providing a basic set of instructions to perform arithmetic operations, data movement, and control flow, as well as system calls.</p>
+<p>Now you can push a string letter by letter onto queue, pop them one by one and get the string in correct order!</p>
+<hr>
+<h2 id="registers-and-queue">Registers and queue</h2>
+<ul>
+<li><strong>A</strong>, <strong>B</strong>, <strong>C</strong>: Three general-purpose registers that can store integer values.</li>
+<li>All registers can store integer values and are accessible through mnemonics or their indices.</li>
+<li><strong>flag</strong>: A special register that stores the result of comparison operations.</li>
+<li><strong>fd</strong> (File Descriptor): A special register that stores the file descriptor of the currently open file.</li>
+<li><strong>Queue</strong>: A FIFO queue that stores integer values. The queue is used to pass arguments to system calls and store data. Values can be pushed to the back of the queue and popped from the front (First In First Out).</li>
+</ul>
+<hr>
+<h2 id="mnemonics">Mnemonics</h2>
+<h3 id="1-data-movement">1. Data Movement</h3>
+<h4 id="push"><strong>PUSH</strong></h4>
+<ul>
+<li><strong>Description</strong>: Adds a value to the queue.</li>
+<li><strong>Syntax</strong>: <code>PUSH &lt;value or register&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>PUSH 10</code> → Pushes the value <code>10</code> into the queue.</li>
+<li><code>PUSH A</code> → Pushes the value in register <code>A</code> into the queue.</li>
+</ul>
+</li>
+</ul>
+<h4 id="pop"><strong>POP</strong></h4>
+<ul>
+<li><strong>Description</strong>: Removes a value from the queue.</li>
+<li><strong>Syntax</strong>:
+<ul>
+<li><code>POP</code> → Removes the front of the queue without storing it.</li>
+<li><code>POP &lt;register&gt;</code> → Removes the front of the queue and stores it in a register.</li>
+</ul>
+</li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>POP</code> → Removes the first value from the queue.</li>
+<li><code>POP B</code> → Stores the first value of the queue in register <code>B</code>.</li>
+</ul>
+</li>
+</ul>
+<h3 id="get"><strong>GET</strong></h3>
+<ul>
+<li><strong>Description</strong>: Retrieves a value from the queue at a specific index and stores it in a register. The index can be specified as either a register or a direct value.</li>
+<li><strong>Syntax</strong>: <code>GET &lt;destination register&gt; &lt;index (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>GET A 2</code> → Retrieves the value at index <code>2</code> of the queue and stores it in register <code>A</code>.</li>
+<li><code>GET B C</code> → Uses the value in register <code>C</code> as the index, retrieves the corresponding value from the queue, and stores it in register <code>B</code>.</li>
+<li>The index is 0-based, meaning <code>queue[0]</code> corresponds to the front of the queue.</li>
+</ul>
+</li>
+</ul>
+<h4 id="mov"><strong>MOV</strong></h4>
+<ul>
+<li><strong>Description</strong>: Copies a value between registers or assigns a constant to a register.</li>
+<li><strong>Syntax</strong>: <code>MOV &lt;destination register&gt; &lt;source (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>MOV A B</code> → Copies the value of register <code>B</code> into register <code>A</code>.</li>
+<li><code>MOV C 10</code> → Assigns the value <code>10</code> to register <code>C</code>.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2-arithmetic-operations">2. Arithmetic Operations</h3>
+<h4 id="add"><strong>ADD</strong></h4>
+<ul>
+<li><strong>Description</strong>: Adds two values and stores the result in the destination register.</li>
+<li><strong>Syntax</strong>: <code>ADD &lt;destination register&gt; &lt;source (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>ADD A B</code> → Adds the values of <code>A</code> and <code>B</code>, stores the result in <code>A</code>.</li>
+<li><code>ADD C 5</code> → Adds <code>5</code> to the value in <code>C</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="sub"><strong>SUB</strong></h4>
+<ul>
+<li><strong>Description</strong>: Subtracts the second value from the first and stores the result in the destination register.</li>
+<li><strong>Syntax</strong>: <code>SUB &lt;destination register&gt; &lt;source (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>SUB A B</code> → Subtracts the value of <code>B</code> from <code>A</code>, stores the result in <code>A</code>.</li>
+<li><code>SUB C 3</code> → Subtracts <code>3</code> from the value in <code>C</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="mul"><strong>MUL</strong></h4>
+<ul>
+<li><strong>Description</strong>: Multiplies two values and stores the result in the destination register.</li>
+<li><strong>Syntax</strong>: <code>MUL &lt;destination register&gt; &lt;source (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>MUL A B</code> → Multiplies the values of <code>A</code> and <code>B</code>, stores the result in <code>A</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="div"><strong>DIV</strong></h4>
+<ul>
+<li><strong>Description</strong>: Divides the first value by the second and stores the result in the destination register.</li>
+<li><strong>Syntax</strong>: <code>DIV &lt;destination register&gt; &lt;source (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>DIV A B</code> → Divides the value of <code>A</code> by <code>B</code>, stores the result in <code>A</code>.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-bitwise-operation">3. Bitwise Operation</h3>
+<h4 id="xor"><strong>XOR</strong></h4>
+<ul>
+<li><strong>Description</strong>: Performs a bitwise XOR operation between two values and stores the result in the destination register.</li>
+<li><strong>Syntax</strong>: <code>XOR &lt;destination register&gt; &lt;source (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>XOR A B</code> → XORs the values of <code>A</code> and <code>B</code>, stores the result in <code>A</code>.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-comparison">4. Comparison</h3>
+<h4 id="cmp"><strong>CMP</strong></h4>
+<ul>
+<li><strong>Description</strong>: Compares two values and sets the <code>flag</code> register.
+<ul>
+<li><code>flag = 0</code> → Values are equal.</li>
+<li><code>flag = 1</code> → First value is greater.</li>
+<li><code>flag = 2</code> → Second value is greater.</li>
+</ul>
+</li>
+<li><strong>Syntax</strong>: <code>CMP &lt;value1 (register or value)&gt; &lt;value2 (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>CMP A B</code> → Compares the values of <code>A</code> and <code>B</code>.</li>
+<li><code>CMP C 10</code> → Compares the value of <code>C</code> with <code>10</code>.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="5-control-flow">5. Control Flow</h3>
+<h4 id="jmp"><strong>JMP</strong></h4>
+<ul>
+<li><strong>Description</strong>: Jumps to a specific instruction.</li>
+<li><strong>Syntax</strong>: <code>JMP &lt;instruction number (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>JMP 5</code> → Jumps to instruction 5.</li>
+<li><code>JMP A</code> → Jumps to the instruction indicated by register <code>A</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="jz"><strong>JZ</strong></h4>
+<ul>
+<li><strong>Description</strong>: Jumps if the <code>flag</code> is <code>0</code> (values are equal).</li>
+<li><strong>Syntax</strong>: <code>JZ &lt;instruction number (register or value)&gt;</code></li>
+<li><strong>Examples</strong>:
+<ul>
+<li><code>JZ 3</code> → Jumps to instruction 3 if the <code>flag</code> is <code>0</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="jnz"><strong>JNZ</strong></h4>
+<ul>
+<li>
+<p><strong>Description</strong>: Jumps if the <code>flag</code> is not <code>0</code>.</p>
+</li>
+<li>
+<p><strong>Syntax</strong>: <code>JNZ &lt;instruction number (register or value)&gt;</code></p>
+</li>
+<li>
+<p><strong>Examples</strong>:</p>
+<ul>
+<li><code>JNZ 8</code> → Jumps to instruction 8 if the <code>flag</code> is not <code>0</code>.</li>
+</ul>
+</li>
+<li>
+<p><strong>IMPORTANT NOTE</strong>: The instruction number is 0-based, meaning the first instruction is at index 0.</p>
+</li>
+</ul>
+<hr>
+<h3 id="6-system-calls">6. System Calls</h3>
+<h4 id="syscall"><strong>SYSCALL</strong></h4>
+<ul>
+<li><strong>Description</strong>: Executes various system-level operations based on a <strong>queue</strong> value. The queue shoud contain the system call id followed by the required parameters.</li>
+<li><strong>Syntax</strong>: <code>SYSCALL</code></li>
+<li><strong>Operations</strong>:
+<ul>
+<li><strong>Print</strong>: <code>id = 0</code>
+<ul>
+<li>Expects the queue to contain the following:
+<ul>
+<li><code>buf_len</code>: Number of characters to print.</li>
+<li><code>buf</code>: ASCII values of characters to print.</li>
+<li><code>buf_len</code> should be pushed first followed by the ASCII values of the characters to print <code>buf</code>.</li>
+</ul>
+</li>
+<li>Example: <code>PUSH 0; PUSH 1; PUSH 65;SYSCALL</code> will print <code>A</code>.</li>
+</ul>
+</li>
+<li><strong>Open File</strong>: <code>id = 1</code>
+<ul>
+<li>Expects the queue to contain the following:
+<ul>
+<li><code>filename_len</code>: Number of characters in the filename.</li>
+<li><code>filename</code>: ASCII values of the filename.</li>
+<li><code>filename_len</code> should be pushed first followed by the ASCII values of the filename <code>filename</code>.</li>
+</ul>
+</li>
+<li>Sets the <code>fd</code> register to the file descriptor of the opened file.</li>
+<li>Example <code>PUSH 1; PUSH 4; PUSH 116; PUSH 101; PUSH 114; PUSH 116; SYSCALL</code> will open the file <code>test</code> and store the file descriptor in <code>fd</code>.</li>
+</ul>
+</li>
+<li><strong>Read File</strong>: <code>id = 2</code>
+<ul>
+<li>Reads from the opened file (stored at <code>fd</code>) and pushes its length and content into the queue in this order.</li>
+<li>Example: <code>PUSH 2; SYSCALL</code> will read from the file previously opened and push the length and content of the file into the queue.</li>
+</ul>
+</li>
+<li><strong>Close File</strong>: <code>id = 3</code>
+<ul>
+<li>Closes the currently open file.</li>
+<li>Example: <code>PUSH 3; SYSCALL</code> will close the file previously opened.</li>
+</ul>
+</li>
+<li><strong>Input from Stdin</strong>: <code>id = 4</code>
+<ul>
+<li>Reads input from the user and pushes its length and content into the queue in this order.</li>
+<li>Example: <code>PUSH 4; SYSCALL</code> will read input from the user and push the length and content of the input into the queue.</li>
+</ul>
+</li>
+<li><strong>IMPORTANT NOTE</strong>: System calls depend only on the queue values !</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="7-program-termination">7. Program Termination</h3>
+<h4 id="end"><strong>END</strong></h4>
+<ul>
+<li><strong>Description</strong>: Terminates program execution.</li>
+<li><strong>Syntax</strong>: <code>END</code></li>
+<li><strong>Example</strong>:
+<ul>
+<li><code>END</code> → Ends the program.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="example-programs">Example Programs</h2>
+<h3 id="1-hello-world">1. Hello World</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>PUSH 0;
+</span></span><span style="display:flex;"><span>PUSH 11;
+</span></span><span style="display:flex;"><span>PUSH 72;
+</span></span><span style="display:flex;"><span>PUSH 101;
+</span></span><span style="display:flex;"><span>PUSH 108;
+</span></span><span style="display:flex;"><span>PUSH 108;
+</span></span><span style="display:flex;"><span>PUSH 111;
+</span></span><span style="display:flex;"><span>PUSH 32;
+</span></span><span style="display:flex;"><span>PUSH 119;
+</span></span><span style="display:flex;"><span>PUSH 111;
+</span></span><span style="display:flex;"><span>PUSH 114;
+</span></span><span style="display:flex;"><span>PUSH 108;
+</span></span><span style="display:flex;"><span>PUSH 100;
+</span></span><span style="display:flex;"><span>SYSCALL;
+</span></span><span style="display:flex;"><span>END
+</span></span></code></pre></div><p>Output: <code>Hello world</code></p>
+<h3 id="printing-numbers-from-4-to-0-in-a-loop">Printing numbers from 4 to 0 in a loop</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>MOV A 5;
+</span></span><span style="display:flex;"><span>CMP A 0;
+</span></span><span style="display:flex;"><span>JZ 10;
+</span></span><span style="display:flex;"><span>MOV B A;
+</span></span><span style="display:flex;"><span>ADD B 47;
+</span></span><span style="display:flex;"><span>PUSH 0;
+</span></span><span style="display:flex;"><span>PUSH 1;
+</span></span><span style="display:flex;"><span>PUSH B;
+</span></span><span style="display:flex;"><span>SYSCALL;
+</span></span><span style="display:flex;"><span>SUB A 1;
+</span></span><span style="display:flex;"><span>JMP 0;
+</span></span><span style="display:flex;"><span>END
+</span></span></code></pre></div><h3 id="read-user-input-and-open-file-with-that-name-then-print-its-content">Read user input and open file with that name, then print its content</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>PUSH 4;
+</span></span><span style="display:flex;"><span>PUSH 1;
+</span></span><span style="display:flex;"><span>SYSCALL;
+</span></span><span style="display:flex;"><span>SYSCALL;
+</span></span><span style="display:flex;"><span>PUSH 2;
+</span></span><span style="display:flex;"><span>PUSH 0;
+</span></span><span style="display:flex;"><span>SYSCALL;
+</span></span><span style="display:flex;"><span>SYSCALL;
+</span></span><span style="display:flex;"><span>END
+</span></span></code></pre></div>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/pegielm" rel="me" title="GitHub"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://x.com/pegielm/" rel="me" title="Twitter"><i data-feather="twitter"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2024   © pegielm |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>
