@@ -9,15 +9,13 @@ date: 2024-06-13
 
 cybersecuirty student
 
-ctf: rev/pwn/crypto, team: [hack_tuah](https://ctftime.org/team/357462), [lab4](https://ctftime.org/team/154533)
-
-looking for internship ;)
+ctf: rev/pwn/misc, team: [hack_tuah](https://ctftime.org/team/357462), [lab4](https://ctftime.org/team/154533)
 
 
 my repos are [here](https://github.com/pegielm?tab=repositories)
 more about me in [interests](../posts/interests)
 
-you can contact me at [twitter](https://twitter.com/pegielm) or "pegielm (at) gmail (dot) com"
+you can contact me at [twitter(X)](https://twitter.com/pegielm) or "pegielm (at) gmail (dot) com"
 
 
 

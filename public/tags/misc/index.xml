@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Misc on pegielm</title>
+    <link>http://localhost:1313/tags/misc/</link>
+    <description>Recent content in Misc on pegielm</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright> © pegielm</copyright>
+    <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/misc/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>apples and oranges</title>
+      <link>http://localhost:1313/posts/apples_and_oranges/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/apples_and_oranges/</guid>
+      <description>Challenge description After capturing an enemy spy, the only thing we got from him was that the password is bananafruit. It does not seem to be right though. Can you help us?&#xA;nc apples-and-oranges-25b1895e82ba.tcp.1753ctf.com 12827&#xA;Solution </description>
+    </item>
+  </channel>
+</rss>

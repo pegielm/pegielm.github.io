@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Tue, 03 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>apples and oranges</title>
+      <link>http://localhost:1313/posts/apples_and_oranges/</link>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/apples_and_oranges/</guid>
+      <description>Challenge description After capturing an enemy spy, the only thing we got from him was that the password is bananafruit. It does not seem to be right though. Can you help us?&#xA;nc apples-and-oranges-25b1895e82ba.tcp.1753ctf.com 12827&#xA;Solution after conecting to the server we are presented with following:&#xA;# nc apples-and-oranges-25b1895e82ba.tcp.1753ctf.com 12827 Wir usen Node v23.10.0 Gib mich eine kleine password:abcdef abcdef Well, well, well... das input ist unallowed! so i tried to fuzz the input with following code and see what happens, then i started filtering by error types.</description>
+    </item>
     <item>
       <title>fifology writeup</title>
       <link>http://localhost:1313/posts/fifology_writeup/</link>
@@ -70,7 +77,7 @@
       <link>http://localhost:1313/about/</link>
       <pubDate>Thu, 13 Jun 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/about/</guid>
-      <description>cybersecuirty student&#xA;ctf: rev/pwn/crypto, team: hack_tuah, lab4&#xA;looking for internship ;)&#xA;my repos are here more about me in interests&#xA;you can contact me at twitter or &amp;ldquo;pegielm (at) gmail (dot) com&amp;rdquo;</description>
+      <description>cybersecuirty student&#xA;ctf: rev/pwn/misc, team: hack_tuah, lab4&#xA;my repos are here more about me in interests&#xA;you can contact me at twitter(X) or &amp;ldquo;pegielm (at) gmail (dot) com&amp;rdquo;</description>
     </item>
     <item>
       <title>my interests</title>
