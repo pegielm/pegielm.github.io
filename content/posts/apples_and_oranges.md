@@ -1,5 +1,5 @@
 ---
-title: apples and oranges
+title: apples and oranges writeup
 date: 2025-04-12
 description: "writeup of the apples and oranges challenge from 1753ctf"
 tags: ["ctf","misc","1753ctf"]

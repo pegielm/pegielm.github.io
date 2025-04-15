@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>safebox writeup - pegielm</title><link rel="icon" type="image/png" href=https://img.icons8.com/?size&#61;100&amp;id&#61;16133&amp;format&#61;png&amp;color&#61;000000 /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="writeup of the safebox challenge from 1753ctf" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/safebox_writeup/">
+  <meta property="og:site_name" content="pegielm">
+  <meta property="og:title" content="safebox writeup">
+  <meta property="og:description" content="writeup of the safebox challenge from 1753ctf">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-04-12T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-04-12T00:00:00+00:00">
+    <meta property="article:tag" content="Ctf">
+    <meta property="article:tag" content="Web">
+    <meta property="article:tag" content="Crypto">
+    <meta property="article:tag" content="1753ctf">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="safebox writeup">
+  <meta name="twitter:description" content="writeup of the safebox challenge from 1753ctf">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.d902908ac6e0fab67957de5db5aea1b6455b19ae2ca98eac4c95a4a0fdc02238.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css"  disabled />
+	
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">pegielm</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/about">about me</a>
+		
+		<a href="/tags">tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">safebox writeup</h1>
+			<div class="meta">Posted on Apr 12, 2025</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="challenge-description">Challenge description</h1>
+<p>Your files. Encrypted at rest. Premium accounts available soon. // careful, this app is resetting every 15 mintutes</p>
+<p>source code:</p>
+<p><a href="/files/safebox/safebox_src_index.js">safebox</a></p>
+<h1 id="solution">Solution</h1>
+<p>we are presented with a site that allows us to register and upload files that will be encrypted (also we can&rsquo;t download them directly by pressing button as it is for &lsquo;premium&rsquo; users only).</p>
+<p>files are stored with per-user folders and ecrypted with AES-256-OFB mode. flag is stored in admin&rsquo;s directory</p>
+<p>directories names are hashes of usernames, so admin folder is <code>sha256(&quot;admin&quot;)</code></p>
+<p>critical vulnerability is in the encryption implementation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">key</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Buffer</span>.<span style="color:#a6e22e">from</span>(<span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">ENCRYPTION_KEY</span>, <span style="color:#e6db74">&#39;hex&#39;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">iv</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Buffer</span>.<span style="color:#a6e22e">from</span>(<span style="color:#a6e22e">process</span>.<span style="color:#a6e22e">env</span>.<span style="color:#a6e22e">ENCRYPTION_IV</span>, <span style="color:#e6db74">&#39;hex&#39;</span>);
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">encrypt</span>(<span style="color:#a6e22e">buffer</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">iv</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">cipher</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">crypto</span>.<span style="color:#a6e22e">createCipheriv</span>(<span style="color:#e6db74">&#39;aes-256-ofb&#39;</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">iv</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#a6e22e">encrypted</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">cipher</span>.<span style="color:#a6e22e">update</span>(<span style="color:#a6e22e">buffer</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">encrypted</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">Buffer</span>.<span style="color:#a6e22e">concat</span>([<span style="color:#a6e22e">encrypted</span>, <span style="color:#a6e22e">cipher</span>.<span style="color:#66d9ef">final</span>()]);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">encrypted</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>the same key and iv are used for encrypting all files accros all users. this means that the same keystream is reused as OFB mode generates it without ingering with the plaintext
+<a href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Output_feedback_(OFB)">https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Output_feedback_(OFB)</a></p>
+<p>xor operation is reversable so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>A ⊕ KEY = A_ENC -&gt; KEY = A ⊕ A_ENC
+</span></span><span style="display:flex;"><span>B ⊕ KEY = B_ENC -&gt; KEY = B ⊕ B_ENC
+</span></span><span style="display:flex;"><span>                    ^ these can be transformed to:  
+</span></span><span style="display:flex;"><span>A ⊕ A_ENC = B ⊕ B_ENC
+</span></span><span style="display:flex;"><span>A ⊕ A_ENC ⊕ B_ENC = B
+</span></span></code></pre></div><p>so xor-ing the two encrypted files with known plaintext will give us the plaintext of the other file.</p>
+<p>solve script in python:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> base64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>BASE_URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://safebox-1bbcbadc1e5d.1753ctf.com&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">register_user</span>(username, password):
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>BASE_URL<span style="color:#e6db74">}</span><span style="color:#e6db74">/api/register&#34;</span>,
+</span></span><span style="display:flex;"><span>        json<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;username&#34;</span>: username, <span style="color:#e6db74">&#34;password&#34;</span>: password}
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>json()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;registration failed: </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>text<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upload_known_file</span>(token, filename, content):
+</span></span><span style="display:flex;"><span>    b64content <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>b64encode(content)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>BASE_URL<span style="color:#e6db74">}</span><span style="color:#e6db74">/api/upload&#34;</span>,
+</span></span><span style="display:flex;"><span>        headers<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;x-token&#34;</span>: token},
+</span></span><span style="display:flex;"><span>        json<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;fileName&#34;</span>: filename, <span style="color:#e6db74">&#34;b64file&#34;</span>: b64content}
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">!=</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;upload failed: </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>text<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_folder_hash</span>(username):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> hashlib<span style="color:#f92672">.</span>sha256(username<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>hexdigest()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">download_file</span>(token, folder, filename):
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>BASE_URL<span style="color:#e6db74">}</span><span style="color:#e6db74">/files/</span><span style="color:#e6db74">{</span>folder<span style="color:#e6db74">}</span><span style="color:#e6db74">/</span><span style="color:#e6db74">{</span>filename<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>        headers<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;x-token&#34;</span>: token}
+</span></span><span style="display:flex;"><span>    )
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>content
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;download failed: </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">xor_bytes</span>(a, b):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> bytes(x <span style="color:#f92672">^</span> y <span style="color:#66d9ef">for</span> x, y <span style="color:#f92672">in</span> zip(a, b))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># to avoid collisions</span>
+</span></span><span style="display:flex;"><span>    username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hacker_&#34;</span> <span style="color:#f92672">+</span> hashlib<span style="color:#f92672">.</span>md5(str(hash(str))<span style="color:#f92672">.</span>encode())<span style="color:#f92672">.</span>hexdigest()[:<span style="color:#ae81ff">8</span>]
+</span></span><span style="display:flex;"><span>    password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hackpass123&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] registering user: </span><span style="color:#e6db74">{</span>username<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    user_data <span style="color:#f92672">=</span> register_user(username, password)
+</span></span><span style="display:flex;"><span>    token <span style="color:#f92672">=</span> user_data[<span style="color:#e6db74">&#34;token&#34;</span>]
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] got token: </span><span style="color:#e6db74">{</span>token[:<span style="color:#ae81ff">10</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#file with known content (all zeros)</span>
+</span></span><span style="display:flex;"><span>    known_content <span style="color:#f92672">=</span> bytes([<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> <span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>    filename <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;known_file.txt&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;[+] uploading file with known content&#34;</span>)
+</span></span><span style="display:flex;"><span>    upload_known_file(token, filename, known_content)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#folder hash for current user and admin</span>
+</span></span><span style="display:flex;"><span>    user_folder <span style="color:#f92672">=</span> get_folder_hash(username)
+</span></span><span style="display:flex;"><span>    admin_folder <span style="color:#f92672">=</span> get_folder_hash(<span style="color:#e6db74">&#34;admin&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] user folder: </span><span style="color:#e6db74">{</span>user_folder[:<span style="color:#ae81ff">10</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] admin folder: </span><span style="color:#e6db74">{</span>admin_folder[:<span style="color:#ae81ff">10</span>]<span style="color:#e6db74">}</span><span style="color:#e6db74">...&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#download both encrypted files</span>
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;[+] downloading our encrypted file&#34;</span>)
+</span></span><span style="display:flex;"><span>    encrypted_known <span style="color:#f92672">=</span> download_file(token, user_folder, filename)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;[+] downloading encrypted flag&#34;</span>)
+</span></span><span style="display:flex;"><span>    encrypted_flag <span style="color:#f92672">=</span> download_file(token, admin_folder, <span style="color:#e6db74">&#34;flag.txt&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#XOR operations to recover the flag</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 1. XOR the two encrypted files (cancels out the keystream)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 2. XOR with known content to get the flag</span>
+</span></span><span style="display:flex;"><span>    xor_of_encrypted_files <span style="color:#f92672">=</span> xor_bytes(encrypted_flag, encrypted_known)
+</span></span><span style="display:flex;"><span>    flag_bytes <span style="color:#f92672">=</span> xor_bytes(xor_of_encrypted_files, known_content)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;[/] brrr hacking  &#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">#decode as UTF-8</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>        flag <span style="color:#f92672">=</span> flag_bytes<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] decrypted content of flag.txt: </span><span style="color:#e6db74">{</span>flag<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">UnicodeDecodeError</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;[!] could not decode flag as UTF-8, printing as hex&#34;</span>)
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;[+] flag (hex): </span><span style="color:#e6db74">{</span>flag_bytes<span style="color:#f92672">.</span>hex()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><p>output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> registering user: hacker_98fc1f6c
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> got token: a1f60df5ff...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> uploading file with known content
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> user folder: 221d40be95...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> admin folder: 8c6976e5b5...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> downloading our encrypted file
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> downloading encrypted flag
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>/<span style="color:#f92672">]</span> brrr hacking
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> decrypted content of flag.txt: Well, good this file is encrypted, cause in any other
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> someone could just come here and steal my valuable
+</span></span><span style="display:flex;"><span>flag. The flag is 1753c<span style="color:#f92672">{</span>encrypt3d_but_n0t_s0000_s4fe_b0x<span style="color:#f92672">}</span>. Cool, huh?
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Yes it is!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Sincerely yours,
+</span></span><span style="display:flex;"><span>Mr. Admin
+</span></span></code></pre></div>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/ctf">ctf</a></li>
+					
+					<li><a href="/tags/web">web</a></li>
+					
+					<li><a href="/tags/crypto">crypto</a></li>
+					
+					<li><a href="/tags/1753ctf">1753ctf</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/pegielm" rel="me" title="GitHub"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://x.com/pegielm/" rel="me" title="Twitter"><i data-feather="twitter"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2025   © pegielm |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>
