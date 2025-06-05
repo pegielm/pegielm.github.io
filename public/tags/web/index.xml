@@ -10,11 +10,11 @@
     <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/web/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>safebox</title>
-      <link>http://localhost:1313/posts/safebox/</link>
+      <title>safebox writeup</title>
+      <link>http://localhost:1313/posts/safebox_writeup/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/safebox/</guid>
-      <description>Challenge description Solution </description>
+      <guid>http://localhost:1313/posts/safebox_writeup/</guid>
+      <description>Challenge description Your files. Encrypted at rest. Premium accounts available soon. // careful, this app is resetting every 15 mintutes&#xA;source code:&#xA;safebox&#xA;Solution we are presented with a site that allows us to register and upload files that will be encrypted (also we can&amp;rsquo;t download them directly by pressing button as it is for &amp;lsquo;premium&amp;rsquo; users only).&#xA;files are stored with per-user folders and ecrypted with AES-256-OFB mode. flag is stored in admin&amp;rsquo;s directory</description>
     </item>
   </channel>
 </rss>

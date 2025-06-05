@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>invaders writeup - pegielm</title><link rel="icon" type="image/png" href=https://img.icons8.com/?size&#61;100&amp;id&#61;16133&amp;format&#61;png&amp;color&#61;000000 /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="writeup of the invaders challenge from nops ctf 2025" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/invaders_writeup/">
+  <meta property="og:site_name" content="pegielm">
+  <meta property="og:title" content="invaders writeup">
+  <meta property="og:description" content="writeup of the invaders challenge from nops ctf 2025">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-06-01T00:00:00+00:00">
+    <meta property="article:tag" content="Ctf">
+    <meta property="article:tag" content="Rev">
+    <meta property="article:tag" content="Nopsctf">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="invaders writeup">
+  <meta name="twitter:description" content="writeup of the invaders challenge from nops ctf 2025">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.d902908ac6e0fab67957de5db5aea1b6455b19ae2ca98eac4c95a4a0fdc02238.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css"  disabled />
+	
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">pegielm</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/about">about me</a>
+		
+		<a href="/tags">tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">invaders writeup</h1>
+			<div class="meta">Posted on Jun 1, 2025</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="challenge-description">Challenge description</h1>
+<p>We&rsquo;ve found an old-school space-invaders game on a PwnTopia server, but it seems to be unusually large in size. Maybe something is hidden inside of it&hellip;</p>
+<h1 id="solution">Solution</h1>
+<p>we are given binary file (game):</p>
+<p><img src="/images/invaders/invaders_game.png" alt="game"></p>
+<p>first we can see that this is Godot Engine game, so we can extract the game - for example using <a href="https://github.com/GDRETools/gdsdecomp">Godot RE Tools</a></p>
+<p>after opening the game in Godot there is suspicious fragment of code:</p>
+<p><img src="/images/invaders/invaders_godot.png" alt="godot"></p>
+<p>which creates a file from hex array. GDScript is similar to Python, so we can easily replicate this and get obfuscated file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>f <span style="color:#f92672">=</span> [<span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">53</span>, <span style="color:#ae81ff">218</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">73</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">78</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">181</span>, <span style="color:#ae81ff">144</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">242</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">########## TRUNCATED ############</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>]
+</span></span><span style="display:flex;"><span>e <span style="color:#f92672">=</span> [<span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>, <span style="color:#ae81ff">74</span>, <span style="color:#ae81ff">111</span>]
+</span></span><span style="display:flex;"><span>v <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> w <span style="color:#f92672">in</span> range(len(f)):
+</span></span><span style="display:flex;"><span>    v<span style="color:#f92672">.</span>append(f[w] <span style="color:#f92672">^</span> e[w <span style="color:#f92672">%</span> len(e)])
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#39;out.exe&#39;</span>, <span style="color:#e6db74">&#39;wb&#39;</span>) <span style="color:#66d9ef">as</span> l:
+</span></span><span style="display:flex;"><span>    l<span style="color:#f92672">.</span>write(bytearray(v))
+</span></span><span style="display:flex;"><span>    l<span style="color:#f92672">.</span>close()
+</span></span></code></pre></div><p>out.exe is a windows executable:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&gt; .\out.exe
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      .-&#34;&#34;&#34;-.
+</span></span><span style="display:flex;"><span>     / .===. \
+</span></span><span style="display:flex;"><span>     \/ 0 0 \/
+</span></span><span style="display:flex;"><span>     ( \_-_/ )
+</span></span><span style="display:flex;"><span> ___ooo__V__ooo___
+</span></span><span style="display:flex;"><span>|                |
+</span></span><span style="display:flex;"><span>|  Espeax wants  |
+</span></span><span style="display:flex;"><span>|   to escape!   |
+</span></span><span style="display:flex;"><span>|________________|
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Espeax, a brave inhabitant of N0PStopia, has been captured and trapped within a cryptic binary by the sinister agents of PWNtopia.
+</span></span><span style="display:flex;"><span>There is only one way out -- the right key must be found, hidden somewhere in the environment.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To escape provide me the right key...
+</span></span></code></pre></div><p>we can&rsquo;t send any input to the program, so let&rsquo;s inspect the binary in IDA.</p>
+<p><img src="/images/invaders/invaders_main.png" alt="invaders_main"></p>
+<p>there happens some decryption of the Format variable, which can be reversed</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>data <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0x87</span>, <span style="color:#ae81ff">0x13</span>, <span style="color:#ae81ff">0xEE</span>, <span style="color:#ae81ff">0x13</span>, <span style="color:#ae81ff">0x26</span>, <span style="color:#ae81ff">0x03</span>, <span style="color:#ae81ff">0xEA</span>, <span style="color:#ae81ff">0x26</span>, <span style="color:#ae81ff">0xC2</span>, <span style="color:#ae81ff">0xFA</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0xD2</span>, <span style="color:#ae81ff">0xEE</span>, <span style="color:#ae81ff">0x26</span>, <span style="color:#ae81ff">0x1F</span>, <span style="color:#ae81ff">0xF6</span>, <span style="color:#ae81ff">0x23</span>, <span style="color:#ae81ff">0x1B</span>, <span style="color:#ae81ff">0xCF</span>, <span style="color:#ae81ff">0x26</span>, <span style="color:#ae81ff">0x7F</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0xE7</span>, <span style="color:#ae81ff">0x67</span>, <span style="color:#ae81ff">0x6B</span>, <span style="color:#ae81ff">0xCA</span>, <span style="color:#ae81ff">0x12</span>, <span style="color:#ae81ff">0xEA</span>, <span style="color:#ae81ff">0x12</span>, <span style="color:#ae81ff">0xEA</span>, <span style="color:#ae81ff">0xB2</span>
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rol8</span>(x, n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ((x <span style="color:#f92672">&lt;&lt;</span> n) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>) <span style="color:#f92672">|</span> (x <span style="color:#f92672">&gt;&gt;</span> (<span style="color:#ae81ff">8</span> <span style="color:#f92672">-</span> n))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ror8</span>(x, n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (x <span style="color:#f92672">&gt;&gt;</span> n) <span style="color:#f92672">|</span> ((x <span style="color:#f92672">&lt;&lt;</span> (<span style="color:#ae81ff">8</span> <span style="color:#f92672">-</span> n)) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>decoded_bytes <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> data:
+</span></span><span style="display:flex;"><span>    tmp1 <span style="color:#f92672">=</span> ror8(b, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    tmp2 <span style="color:#f92672">=</span> (tmp1 <span style="color:#f92672">-</span> <span style="color:#ae81ff">49</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>
+</span></span><span style="display:flex;"><span>    tmp3 <span style="color:#f92672">=</span> ror8(tmp2, <span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>    tmp4 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">100</span> <span style="color:#f92672">-</span> tmp3) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>
+</span></span><span style="display:flex;"><span>    bout <span style="color:#f92672">=</span> rol8(tmp4, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    decoded_bytes<span style="color:#f92672">.</span>append(bout)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>format_str <span style="color:#f92672">=</span> bytes(decoded_bytes)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;ascii&#39;</span>)
+</span></span><span style="display:flex;"><span>print(format_str)
+</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Here is your flag: N0PS{%s%s}
+</span></span></code></pre></div><p>so that is where flag is printed - it is constructed from two strings: pbData and unk_140005740</p>
+<p>by examining xrefs to pbData we can find that it is used in StartAddress function:</p>
+<p><img src="/images/invaders/invaders_pbdata.png" alt="invaders_pbdata"></p>
+<p>and is decoded by adding index of byte to the byte itself:</p>
+<p><img src="/images/invaders/invaders_start_address.png" alt="invaders_start_address"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>data <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0x59</span>, <span style="color:#ae81ff">0x2F</span>, <span style="color:#ae81ff">0x73</span>, <span style="color:#ae81ff">0x5C</span>, <span style="color:#ae81ff">0x44</span>, <span style="color:#ae81ff">0x2F</span>, <span style="color:#ae81ff">0x70</span>, <span style="color:#ae81ff">0x2C</span>, <span style="color:#ae81ff">0x57</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>decoded <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(data)):
+</span></span><span style="display:flex;"><span>    decoded <span style="color:#f92672">+=</span> chr(data[i]<span style="color:#f92672">+</span>i)
+</span></span><span style="display:flex;"><span>print(decoded)
+</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>Y0u_H4v3_
+</span></span></code></pre></div><p>second part of the flag - unk_140005740 is used in sub_140001290:</p>
+<p><img src="/images/invaders/invaders_unk.png" alt="invaders_unk"></p>
+<p>sub_140001290 has two interesting parts - first is aR2v0rw52axjvbm variable, which contains a base64 encoded string:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">&gt;&gt;&gt;</span> b64decode(<span style="color:#e6db74">&#34;R2V0RW52aXJvbm1lbnRWYXJpYWJsZUE=&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;GetEnvironmentVariableA&#39;</span>
+</span></span></code></pre></div><p>this decoded string is passed to GetProcAddress function, which is used to get address of a function in a DLL. In this case it is used to get address of GetEnvironmentVariableA function from kernel32.dll</p>
+<p>and then it is used to get environment variable &ldquo;N0PS_ENV&rdquo;</p>
+<p><img src="/images/invaders/invaders_sub.png" alt="invaders_sub"></p>
+<p>data pulled from the environment variable is checked against decrypted string:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>data <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0xB9</span>, <span style="color:#ae81ff">0x9D</span>, <span style="color:#ae81ff">0x58</span>, <span style="color:#ae81ff">0xBD</span>, <span style="color:#ae81ff">0x9B</span>, <span style="color:#ae81ff">0x37</span>, <span style="color:#ae81ff">0xBD</span>, <span style="color:#ae81ff">0xB9</span>, <span style="color:#ae81ff">0x19</span>, <span style="color:#ae81ff">0x7A</span>, <span style="color:#ae81ff">0x9D</span>, <span style="color:#ae81ff">0x18</span>, <span style="color:#ae81ff">0x23</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rol8</span>(x, n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ((x <span style="color:#f92672">&lt;&lt;</span> n) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>) <span style="color:#f92672">|</span> (x <span style="color:#f92672">&gt;&gt;</span> (<span style="color:#ae81ff">8</span> <span style="color:#f92672">-</span> n))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>decrypted <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> data:
+</span></span><span style="display:flex;"><span>    tmp <span style="color:#f92672">=</span> ((<span style="color:#f92672">-</span><span style="color:#ae81ff">125</span>) <span style="color:#f92672">-</span> b) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>
+</span></span><span style="display:flex;"><span>    tmp2 <span style="color:#f92672">=</span> rol8(tmp, <span style="color:#ae81ff">3</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>
+</span></span><span style="display:flex;"><span>    new_b <span style="color:#f92672">=</span> (tmp2 <span style="color:#f92672">-</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0xFF</span>
+</span></span><span style="display:flex;"><span>    decrypted<span style="color:#f92672">.</span>append(new_b)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>decrypted <span style="color:#f92672">=</span> bytes(decrypted)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;ascii&#34;</span>)
+</span></span><span style="display:flex;"><span>print(decrypted)
+</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>S4V3D_3SPE4X
+</span></span></code></pre></div><p>we have our flag N0PS{Y0u_H4v3_S4V3D_3SPE4X} but also we can just set environment variable N0PS_ENV to S4V3D_3SPE4X and run the program again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&gt; $env:N0PS_ENV=&#34;S4V3D_3SPE4X&#34;
+</span></span><span style="display:flex;"><span>&gt; .\out.exe
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      .-&#34;&#34;&#34;-.
+</span></span><span style="display:flex;"><span>     / .===. \
+</span></span><span style="display:flex;"><span>     \/ 0 0 \/
+</span></span><span style="display:flex;"><span>     ( \_-_/ )
+</span></span><span style="display:flex;"><span> ___ooo__V__ooo___
+</span></span><span style="display:flex;"><span>|                |
+</span></span><span style="display:flex;"><span>|  Espeax wants  |
+</span></span><span style="display:flex;"><span>|   to escape!   |
+</span></span><span style="display:flex;"><span>|________________|
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Espeax, a brave inhabitant of N0PStopia, has been captured and trapped within a cryptic binary by the sinister agents of PWNtopia.
+</span></span><span style="display:flex;"><span>There is only one way out -- the right key must be found, hidden somewhere in the environment.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>To escape provide me the right key...
+</span></span><span style="display:flex;"><span>Here is your flag: N0PS{Y0u_H4v3_S4V3D_3SPE4X}
+</span></span></code></pre></div>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/ctf">ctf</a></li>
+					
+					<li><a href="/tags/rev">rev</a></li>
+					
+					<li><a href="/tags/nopsctf">nopsctf</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/pegielm" rel="me" title="GitHub"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://x.com/pegielm/" rel="me" title="Twitter"><i data-feather="twitter"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2025   © pegielm |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>
