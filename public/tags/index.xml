@@ -17,24 +17,10 @@
       <description></description>
     </item>
     <item>
-      <title>Nopsctf</title>
-      <link>http://localhost:1313/tags/nopsctf/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/nopsctf/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Rev</title>
       <link>http://localhost:1313/tags/rev/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/rev/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>1753ctf</title>
-      <link>http://localhost:1313/tags/1753ctf/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/1753ctf/</guid>
       <description></description>
     </item>
     <item>
@@ -59,52 +45,10 @@
       <description></description>
     </item>
     <item>
-      <title>Zeroday</title>
-      <link>http://localhost:1313/tags/zeroday/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/zeroday/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Block Ctf</title>
-      <link>http://localhost:1313/tags/block-ctf/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/block-ctf/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Hkcert</title>
-      <link>http://localhost:1313/tags/hkcert/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/hkcert/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Hackthevote</title>
-      <link>http://localhost:1313/tags/hackthevote/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/hackthevote/</guid>
-      <description></description>
-    </item>
-    <item>
       <title>Pwn</title>
       <link>http://localhost:1313/tags/pwn/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/tags/pwn/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Ecsc24</title>
-      <link>http://localhost:1313/tags/ecsc24/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/ecsc24/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Hobby</title>
-      <link>http://localhost:1313/tags/hobby/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/hobby/</guid>
       <description></description>
     </item>
   </channel>

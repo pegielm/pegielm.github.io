@@ -7,7 +7,9 @@ date: 2024-06-13
 
 {{< figure src="https://i.imgur.com/xyNfXGo.jpg" width="100" height="100" >}} 
 
-cybersecuirty student
+cybersecurity student
+
+currently working as Intern Cybersecurity Engineer,  mostly with EDR and DLP solutions
 
 ctf: rev/pwn/misc, team: [hack_tuah](https://ctftime.org/team/357462), [lab4](https://ctftime.org/team/154533)
 

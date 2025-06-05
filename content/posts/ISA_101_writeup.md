@@ -2,7 +2,7 @@
 title: ISA 101 writeup
 date: 2024-11-11
 description: "writeup of the ISA 101 challenge from hkcert2024"
-tags: ["ctf","rev","hkcert"]
+tags: ["ctf","rev"]
 ---
 #    Challenge description
 

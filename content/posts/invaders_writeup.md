@@ -2,7 +2,7 @@
 title: invaders writeup
 date: 2025-06-01
 description: "writeup of the invaders challenge from nops ctf 2025"
-tags: ["ctf","rev","nopsctf"]
+tags: ["ctf","rev"]
 ---
 
 # Challenge description
