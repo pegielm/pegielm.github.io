@@ -1,7 +1,7 @@
 ---
 title: red flags writeup
 date: 2024-11-17
-description: "writeup of the red flags challenge from block ctf"
+description: "[rev] writeup of the red flags challenge from block ctf"
 tags: ["ctf","rev"]
 ---
 # Challenge description

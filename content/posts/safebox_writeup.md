@@ -1,7 +1,7 @@
 ---
 title: safebox writeup
 date: 2025-04-12
-description: "writeup of the safebox challenge from 1753ctf"
+description: "[web] [crypto] writeup of the safebox challenge from 1753ctf"
 tags: ["ctf","web","crypto"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: cpu goes brrr writeup
 date: 2024-07-05
-description: "writeup of the cpu goes brr challenge from hack cert 2024 ctf"
+description: "[rev] writeup of the cpu goes brr challenge from hack cert 2024 ctf"
 tags: ["ctf","rev"]
 ---
 

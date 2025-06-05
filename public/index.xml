@@ -7,8 +7,22 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Sun, 01 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 02 Jun 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>pwnfield writeup</title>
+      <link>http://localhost:1313/posts/pwnfield_writeup/</link>
+      <pubDate>Mon, 02 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/pwnfield_writeup/</guid>
+      <description>Challenge description We discovered that PwnTopia use their secret mine to collect shellcodium, a very rare and powerful resource! We need it too, to be able to defend N0PStopia. However, PwnTopia has put some mines in the way to the shellcodium, but we are lucky PwnTopia left their most powerful tool, a shell , sh on their way out! Can this be a secret message? Can you manage to avoid the mines and use their tool against them?</description>
+    </item>
+    <item>
+      <title>under attack writeup</title>
+      <link>http://localhost:1313/posts/under_attack_writeup/</link>
+      <pubDate>Mon, 02 Jun 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/under_attack_writeup/</guid>
+      <description>Challenge description Ladybug Command System FULLY OPERATIONAL&#xA;(attached challenge binary with libc)&#xA;Solution program is command console:&#xA;./ladybug_app Noopsy Defenses CRUSHED! Ladybug Command System FULLY OPERATIONAL! --- Ladybug Overlord Command Console --- Noopsy Land Operations Menu ---------------------------------------- unleash_swarm &amp;lt;idx&amp;gt; &amp;lt;size&amp;gt; - Deploy new agent. corrupt_systems &amp;lt;idx&amp;gt; &amp;lt;hex_data&amp;gt; - Inject payload into agent. gather_intel &amp;lt;idx&amp;gt; - Retrieve intel from agent. retreat_agent &amp;lt;idx&amp;gt; - Recall agent. seize_airwaves &amp;lt;hex_addr&amp;gt; - Hijack comms relay. send_echo_pulse - Send pulse via relay.</description>
+    </item>
     <item>
       <title>invaders writeup</title>
       <link>http://localhost:1313/posts/invaders_writeup/</link>

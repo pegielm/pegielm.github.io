@@ -1,7 +1,7 @@
 ---
 title: magiczna cat writeup
 date: 2024-07-05
-description: "writeup of the magiczna cat challenge from hack cert 2024 ctf"
+description: "[rev] writeup of the magiczna cat challenge from hack cert 2024 ctf"
 tags: ["ctf","rev"]
 ---
 

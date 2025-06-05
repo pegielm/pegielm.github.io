@@ -1,7 +1,7 @@
 ---
 title: fifology writeup
 date: 2024-12-03
-description: "writeup of the fifology challenge from zeroday ctf (which I created)"
+description: "[rev] writeup of the fifology challenge from zeroday ctf (which I created)"
 tags: ["ctf","rev"]
 ---
 
