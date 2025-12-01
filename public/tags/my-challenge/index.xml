@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>My Challenge on pegielm</title>
+    <link>http://localhost:1313/tags/my-challenge/</link>
+    <description>Recent content in My Challenge on pegielm</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <copyright> © pegielm</copyright>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/my-challenge/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>vibe coding writeup</title>
+      <link>http://localhost:1313/posts/vibe_coding/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/vibe_coding/</guid>
+      <description>Challenge description https://gemini.google.com/share/fe4fdfc523f4&#xA;(yes entire challange was generated as &amp;lsquo;secure&amp;rsquo; python code by gemini, and same code was on the server, except with different flag)&#xA;Solution generated code looks &amp;lsquo;secure&amp;rsquo;&#xA;import sys # Flag stored here secret = &amp;#34;zeroday{fake_flag}&amp;#34; # Blacklist setup BLACKLIST = [&amp;#34;secret&amp;#34;, &amp;#34;()&amp;#34;, &amp;#34;[&amp;#34;, &amp;#34;]&amp;#34;, &amp;#34;{&amp;#34;, &amp;#34;}&amp;#34;, &amp;#34;&amp;#39;&amp;#34;, &amp;#39;&amp;#34;&amp;#39;, &amp;#34;import&amp;#34;, &amp;#34;os&amp;#34;, &amp;#34;globals&amp;#34;, &amp;#34;locals&amp;#34;, &amp;#34;_&amp;#34;, &amp;#34;getattr&amp;#34;, &amp;#34;dir&amp;#34;, &amp;#34;eval&amp;#34;, &amp;#34;exec&amp;#34;, &amp;#34;system&amp;#34;] MAX_LEN = 6 print(&amp;#34;Welcome to the 6-character Python jail!</description>
+    </item>
+  </channel>
+</rss>

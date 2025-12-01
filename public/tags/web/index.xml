@@ -7,8 +7,15 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/web/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>my blog writeup</title>
+      <link>http://localhost:1313/posts/my_blog/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/my_blog/</guid>
+      <description>Challenge description check out my blog ! files (source code):&#xA;src_086b774e10373abf7d2fcc1c7dbcb23f9caf768f8fbcc3492e372cdcb87193c4.zip&#xA;. ├── Dockerfile ├── app.py ├── requirements.txt └── templates ├── add.html ├── admin.html ├── index.html └── post.html sha256 sums:&#xA;086b774e10373abf7d2fcc1c7dbcb23f9caf768f8fbcc3492e372cdcb87193c4 src_086b774e10373abf7d2fcc1c7dbcb23f9caf768f8fbcc3492e372cdcb87193c4.zip 17 participants solved this challenge out of 86 → 19.77% solve rate&#xA;It was the 9th hardest challenge out of 25 challenges in the CTF&#xA;Disclaimer:&#xA;challange was using tourist tourist github - CTFd plugin for visiting websites, which was hosted during the CTF (but now it is not available)</description>
+    </item>
     <item>
       <title>safebox writeup</title>
       <link>http://localhost:1313/posts/safebox_writeup/</link>

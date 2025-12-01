@@ -1,18 +1,19 @@
 ---
 title: my interests
 date: 2024-06-13
-description: "non-cybersecuirty related"
+description: "i know nobody cares (tzw. nikt nie pytał)"
+tags: ["offtopic"]
 ---
 
 ## Magic: the Gathering 🧙‍♂️
 
 ### currently playing (might be outdated)
 
-standard: uw control, jeskai oculus, omnisience combo
+standard: uw control
 
 ### decks i used to play
 
-* standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control
+* standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control, jeskai oculus, omnisience combo (rip abuelo)
 * modern: amulet titan, uw control, burn, humans
 * pionieer: mono w humans , uw control , uw spirits, lotus field
 * commander: brago, king eternal

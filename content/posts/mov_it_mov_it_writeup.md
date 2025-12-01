@@ -2,7 +2,7 @@
 title: mov it mov it writeup
 date: 2024-12-03
 description: "[rev] writeup of the mov it mov it challenge from zeroday ctf (which I created)"
-tags: ["ctf","rev"]
+tags: ["ctf","rev","my challenge"]
 ---
 
 # Challenge description

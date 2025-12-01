@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html><head lang="en"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>flag breaker writeup - pegielm</title><link rel="icon" type="image/png" href=https://img.icons8.com/?size&#61;100&amp;id&#61;16133&amp;format&#61;png&amp;color&#61;000000 /><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="[rev] writeup of the flag breaker challenge from zeroday ctf 2025 (which I created)" />
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content="http://localhost:1313/posts/flag_breaker/">
+  <meta property="og:site_name" content="pegielm">
+  <meta property="og:title" content="flag breaker writeup">
+  <meta property="og:description" content="[rev] writeup of the flag breaker challenge from zeroday ctf 2025 (which I created)">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-12-01T00:00:00+00:00">
+    <meta property="article:modified_time" content="2025-12-01T00:00:00+00:00">
+    <meta property="article:tag" content="Ctf">
+    <meta property="article:tag" content="Rev">
+    <meta property="article:tag" content="My Challenge">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="flag breaker writeup">
+  <meta name="twitter:description" content="[rev] writeup of the flag breaker challenge from zeroday ctf 2025 (which I created)">
+<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+	<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+
+	
+	<link rel="stylesheet" type="text/css" media="screen" href="http://localhost:1313/css/main.d902908ac6e0fab67957de5db5aea1b6455b19ae2ca98eac4c95a4a0fdc02238.css" />
+		<link id="darkModeStyle" rel="stylesheet" type="text/css" href="http://localhost:1313/css/dark.c95c5dcf5f32f8b67bd36f7dab66680e068fce2b303087294114aabf7a7c080b.css"  disabled />
+	
+
+	
+	
+
+	
+	
+	
+	
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://localhost:1313/">pegielm</a>
+	</div>
+	<nav>
+		
+		<a href="/">home</a>
+		
+		<a href="/posts">all posts</a>
+		
+		<a href="/about">about me</a>
+		
+		<a href="/tags">tags</a>
+		
+		| <span id="dark-mode-toggle" onclick="toggleTheme()"></span>
+		<script src="http://localhost:1313/js/themetoggle.js"></script>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">flag breaker writeup</h1>
+			<div class="meta">Posted on Dec 1, 2025</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="challenge-description">Challenge description</h1>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>match the high score and get the flag (guide below):
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>🟥🟧🟨🟩🟦 HIGH SCORE
+</span></span><span style="display:flex;"><span>🟦🟥🟧🟨🟩 213700
+</span></span><span style="display:flex;"><span>🟩🟦🟥🟧🟨 SCORE
+</span></span><span style="display:flex;"><span>🟨🟩🟦🟥🟧 213700
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>YOUR FLAG: zerdoday{...}
+</span></span><span style="display:flex;"><span>   🟣
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   🟨🟨🟨
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ps https://www.mesen.ca/ might be useful.
+</span></span></code></pre></div><p>files :</p>
+<p><a href="/files/flag_breaker/breakout.sfc">breakout.sfc</a></p>
+<p><a href="/files/flag_breaker/breakout.sym">breakout.sym</a></p>
+<p>sha256 sums:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>6ac24d634988d54a5638202682d9e10ebc9ef43f6ab640add2cdc6fcb631055a  breakout.sfc
+</span></span><span style="display:flex;"><span>4a631d8dd125f31285b541d88ad2044e1dc33c1547972b0f0579897727963f5f  breakout.sym
+</span></span></code></pre></div><p>12 paritcipants solved this challange out of 86 -&gt; 13.95% solve rate</p>
+<p>it was 8th hardest challange out of 25 challanges in the ctf</p>
+<h1 id="solution">Solution</h1>
+<p>as suggested in the challenge description, we can use the mesen emulator to analyze the game rom</p>
+<p>after loading the rom in mesen, we can see that this is snes brakout game</p>
+<p><img src="/images/flag_breaker/start.png" alt="start"></p>
+<p>based on the description we need to get a score of 213700 to get the flag, but playing the game normally to get this score is (i think) impossible</p>
+<p>we can attach a debugger to the game in mesen, and search for the score variable, by simply searching for string <code>score</code> in the disassembly, as we have debug suymbols provided in the challenge files</p>
+<p><img src="/images/flag_breaker/score.png" alt="score"></p>
+<p>by adding <code>score</code> variable memory address to the <code>watch</code> window, or by displaying memory at that address, we can see the score value</p>
+<p><img src="/images/flag_breaker/value.png" alt="value"></p>
+<p>here I have score 240, which is 0x18 in memory - so last <code>0</code> is skipped and score is stored as <code>21370</code> in memory</p>
+<p>so to get the flag we need to change the score value in memory to <code>21370</code> which is <code>0x7A53</code> in hex</p>
+<p>after changing the value in memory, and resuming the game flag appears on screen</p>
+<p><img src="/images/flag_breaker/flag.png" alt="flag"></p>
+<p>flag: <code>zeroday{to_rev_or_to_cheat_that_is_the_question}</code></p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/ctf">ctf</a></li>
+					
+					<li><a href="/tags/rev">rev</a></li>
+					
+					<li><a href="/tags/my-challenge">my challenge</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+		</article>
+</main>
+<footer>
+  <div style="display:flex"><a class="soc" href="https://github.com/pegielm" rel="me" title="GitHub"><i data-feather="github"></i></a>
+    <a class="border"></a><a class="soc" href="https://x.com/pegielm/" rel="me" title="Twitter"><i data-feather="twitter"></i></a>
+    <a class="border"></a></div>
+  <div class="footer-info">
+    2025   © pegielm |  <a
+      href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+  </div>
+</footer>
+<script>
+  feather.replace()
+</script></div>
+    </body>
+</html>

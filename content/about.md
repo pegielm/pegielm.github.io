@@ -1,6 +1,7 @@
 ---
 title: about me
 date: 2024-06-13
+tags: ["offtopic"]
 ---
 
 
@@ -11,13 +12,16 @@ cybersecurity student
 
 currently working as Intern Cybersecurity Engineer,  mostly with EDR and DLP solutions
 
-ctf: rev/pwn/misc, team: [hack_tuah](https://ctftime.org/team/357462), [lab4](https://ctftime.org/team/154533)
+
+ctf: web/pwn/rev, [lab4](https://ctftime.org/team/154533) + other
 
 
-my repos are [here](https://github.com/pegielm?tab=repositories)
+my repos are [here](https://github.com/pegielm?tab=repositories) (also in pinned)
 more about me in [interests](../posts/interests)
 
-you can contact me at [twitter(X)](https://twitter.com/pegielm) or "pegielm (at) gmail (dot) com"
+you can contact me at "pegielm (at) gmail (dot) com"
+
+
 
 
 

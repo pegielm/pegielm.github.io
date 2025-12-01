@@ -7,8 +7,36 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Mon, 02 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>flag breaker writeup</title>
+      <link>http://localhost:1313/posts/flag_breaker/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/flag_breaker/</guid>
+      <description>Challenge description match the high score and get the flag (guide below): 🟥🟧🟨🟩🟦 HIGH SCORE 🟦🟥🟧🟨🟩 213700 🟩🟦🟥🟧🟨 SCORE 🟨🟩🟦🟥🟧 213700 YOUR FLAG: zerdoday{...} 🟣 🟨🟨🟨 ps https://www.mesen.ca/ might be useful. files :&#xA;breakout.sfc&#xA;breakout.sym&#xA;sha256 sums:&#xA;6ac24d634988d54a5638202682d9e10ebc9ef43f6ab640add2cdc6fcb631055a breakout.sfc 4a631d8dd125f31285b541d88ad2044e1dc33c1547972b0f0579897727963f5f breakout.sym 12 paritcipants solved this challange out of 86 -&amp;gt; 13.95% solve rate&#xA;it was 8th hardest challange out of 25 challanges in the ctf&#xA;Solution as suggested in the challenge description, we can use the mesen emulator to analyze the game rom</description>
+    </item>
+    <item>
+      <title>mov it mov it 2 (nothing ever happens) writeup</title>
+      <link>http://localhost:1313/posts/mov_it_mov_it_2/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mov_it_mov_it_2/</guid>
+      <description>Challenge description files :&#xA;chall&#xA;source code, if you prefer to compile it yourself with movuscator: chall.c&#xA;sha256 sums:&#xA;7523e518c6bb4301a8bd01ac3802739664ec81b60a6606a46b8485c425da59d0 chall 6a27b107b1526e1de476e6dde080c9dea44c2bd5f77238e9402b2a7ba79e7220 chall.c 7 participants solved this challenge out of 86 → 8.14% solve rate&#xA;It was the 2nd hardest challenge out of 25 challenges in the CTF&#xA;Solution looking at the binary in disassembler we can see that it is quite unreadable&#xA;but looking at the strace we can see that when entering correct input clock_nanosleep is called</description>
+    </item>
+    <item>
+      <title>my blog writeup</title>
+      <link>http://localhost:1313/posts/my_blog/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/my_blog/</guid>
+      <description>Challenge description check out my blog ! files (source code):&#xA;src_ab6569819bede62b258a86e5c621e6641764e18c37e9135ad6a309c5c8ba7684.zip&#xA;. ├── Dockerfile ├── app.py ├── bot │ ├── Dockerfile │ └── app.py ├── docker-compose.yml ├── requirements.txt └── templates ├── add.html ├── admin.html ├── index.html └── post.html sha256 sums:&#xA;ab6569819bede62b258a86e5c621e6641764e18c37e9135ad6a309c5c8ba7684 src_ab6569819bede62b258a86e5c621e6641764e18c37e9135ad6a309c5c8ba7684.zip 17 participants solved this challenge out of 86 → 19.77% solve rate&#xA;It was the 9th hardest challenge out of 25 challenges in the CTF&#xA;Disclaimer:&#xA;challange was using tourist tourist github - CTFd plugin for visiting websites, which was hosted during the CTF (but now it is not available)</description>
+    </item>
+    <item>
+      <title>vibe coding writeup</title>
+      <link>http://localhost:1313/posts/vibe_coding/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/vibe_coding/</guid>
+      <description>Challenge description https://gemini.google.com/share/fe4fdfc523f4&#xA;(yes entire challange was generated as &amp;lsquo;secure&amp;rsquo; python code by gemini, and same code was on the server, except with different flag)&#xA;Solution generated code looks &amp;lsquo;secure&amp;rsquo;&#xA;import sys # Flag stored here secret = &amp;#34;zeroday{fake_flag}&amp;#34; # Blacklist setup BLACKLIST = [&amp;#34;secret&amp;#34;, &amp;#34;()&amp;#34;, &amp;#34;[&amp;#34;, &amp;#34;]&amp;#34;, &amp;#34;{&amp;#34;, &amp;#34;}&amp;#34;, &amp;#34;&amp;#39;&amp;#34;, &amp;#39;&amp;#34;&amp;#39;, &amp;#34;import&amp;#34;, &amp;#34;os&amp;#34;, &amp;#34;globals&amp;#34;, &amp;#34;locals&amp;#34;, &amp;#34;_&amp;#34;, &amp;#34;getattr&amp;#34;, &amp;#34;dir&amp;#34;, &amp;#34;eval&amp;#34;, &amp;#34;exec&amp;#34;, &amp;#34;system&amp;#34;] MAX_LEN = 6 print(&amp;#34;Welcome to the 6-character Python jail!</description>
+    </item>
     <item>
       <title>pwnfield writeup</title>
       <link>http://localhost:1313/posts/pwnfield_writeup/</link>
@@ -105,7 +133,7 @@
       <link>http://localhost:1313/posts/interests/</link>
       <pubDate>Thu, 13 Jun 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/posts/interests/</guid>
-      <description>Magic: the Gathering 🧙‍♂️ currently playing (might be outdated) standard: uw control, jeskai oculus, omnisience combo&#xA;decks i used to play standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control modern: amulet titan, uw control, burn, humans pionieer: mono w humans , uw control , uw spirits, lotus field commander: brago, king eternal gym 🏋️‍♀️&#xA;top 10 movies of all time Tenet top 10 books of all time The Lord of the Ice Garden (Jarosław Grzędowicz) other ARAM and TFT enjoyer, Counter Strike (2) proffessional</description>
+      <description>Magic: the Gathering 🧙‍♂️ currently playing (might be outdated) standard: uw control&#xA;decks i used to play standard: temur energy, uw control, bant nexus, 5c gates, paradoxical storm, mono red, bant control, jeskai oculus, omnisience combo (rip abuelo) modern: amulet titan, uw control, burn, humans pionieer: mono w humans , uw control , uw spirits, lotus field commander: brago, king eternal gym 🏋️‍♀️&#xA;top 10 movies of all time Tenet top 10 books of all time The Lord of the Ice Garden (Jarosław Grzędowicz) other ARAM and TFT enjoyer, Counter Strike (2) proffessional</description>
     </item>
   </channel>
 </rss>

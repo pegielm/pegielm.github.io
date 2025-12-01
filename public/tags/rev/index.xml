@@ -7,8 +7,22 @@
     <generator>Hugo</generator>
     <language>en-us</language>
     <copyright> © pegielm</copyright>
-    <lastBuildDate>Sun, 01 Jun 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 01 Dec 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/rev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>flag breaker writeup</title>
+      <link>http://localhost:1313/posts/flag_breaker/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/flag_breaker/</guid>
+      <description>Challenge description match the high score and get the flag (guide below): 🟥🟧🟨🟩🟦 HIGH SCORE 🟦🟥🟧🟨🟩 213700 🟩🟦🟥🟧🟨 SCORE 🟨🟩🟦🟥🟧 213700 YOUR FLAG: zerdoday{...} 🟣 🟨🟨🟨 ps https://www.mesen.ca/ might be useful. files :&#xA;breakout.sfc&#xA;breakout.sym&#xA;sha256 sums:&#xA;6ac24d634988d54a5638202682d9e10ebc9ef43f6ab640add2cdc6fcb631055a breakout.sfc 4a631d8dd125f31285b541d88ad2044e1dc33c1547972b0f0579897727963f5f breakout.sym 12 paritcipants solved this challange out of 86 -&amp;gt; 13.95% solve rate&#xA;it was 8th hardest challange out of 25 challanges in the ctf&#xA;Solution as suggested in the challenge description, we can use the mesen emulator to analyze the game rom</description>
+    </item>
+    <item>
+      <title>mov it mov it 2 (nothing ever happens) writeup</title>
+      <link>http://localhost:1313/posts/mov_it_mov_it_2/</link>
+      <pubDate>Mon, 01 Dec 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/mov_it_mov_it_2/</guid>
+      <description>Challenge description files :&#xA;chall&#xA;source code, if you prefer to compile it yourself with movuscator: chall.c&#xA;sha256 sums:&#xA;7523e518c6bb4301a8bd01ac3802739664ec81b60a6606a46b8485c425da59d0 chall 6a27b107b1526e1de476e6dde080c9dea44c2bd5f77238e9402b2a7ba79e7220 chall.c 7 participants solved this challenge out of 86 → 8.14% solve rate&#xA;It was the 2nd hardest challenge out of 25 challenges in the CTF&#xA;Solution looking at the binary in disassembler we can see that it is quite unreadable&#xA;but looking at the strace we can see that when entering correct input clock_nanosleep is called</description>
+    </item>
     <item>
       <title>invaders writeup</title>
       <link>http://localhost:1313/posts/invaders_writeup/</link>
